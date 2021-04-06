@@ -14,8 +14,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useDrop, useDrag, DndProvider } from 'react-dnd';
 import { NativeTypes, HTML5Backend } from 'react-dnd-html5-backend';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import BasicSearch from './BasicSearch.js';
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -62,54 +63,56 @@ export default function Start() {
     });
   }
 
-  //TODO: Placeholder. This will route us to another part of the app.
-  useEffect(()=>{console.log(input);}, [input]);
+  if(typeof input === typeof undefined) {
+    return (
+      <DndProvider backend={HTML5Backend}>
+        <Container style={{width:'50vw', height:'80vh'}} justify='center' spacing='1em'>
+          <Typography className={classes.text} style={{fontSize: '1.5em', fontWeight: 500, paddingBottom: '1em'}}>
+            Explore our National Collection
+          </Typography>
+          <Typography className={classes.text} style={{color: '#717171', paddingBottom: '1em'}}>
+            Search with an image to find similar results
+          </Typography>
+          <InputZone style={{paddingBottom: '1em'}}
+            onFileDrop   = { (f) => updateFileInput(f) }
+            onURLDrop    = { (u) => setInput({url: u}) }
+            onAssetDrop  = { (a) => setInput(a) }
+            onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
+          />
+          <DecoratedDivider style={{paddingBottom: '1em'}}>
+            <Typography className={classes.text}>&nbsp;Or&nbsp;</Typography>
+          </DecoratedDivider>
+          <Typography className={classes.text} style={{paddingBottom: '1em'}}>
+            Click a sample image to try it
+          </Typography>
 
-  return (
-    <DndProvider backend={HTML5Backend}>
-      <Container style={{width:'50vw', height:'80vh'}} justify='center' spacing='1em'>
-        <Typography className={classes.text} style={{fontSize: '1.5em', fontWeight: 500, paddingBottom: '1em'}}>
-          Explore our National Collection
-        </Typography>
-        <Typography className={classes.text} style={{color: '#717171', paddingBottom: '1em'}}>
-          Search with an image to find similar results
-        </Typography>
-        <InputZone style={{paddingBottom: '1em'}}
-          onFileDrop   = { (f) => updateFileInput(f) }
-          onURLDrop    = { (u) => setInput({url: u}) }
-          onAssetDrop  = { (a) => setInput(a) }
-          onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
-        />
-        <DecoratedDivider style={{paddingBottom: '1em'}}>
-          <Typography className={classes.text}>&nbsp;Or&nbsp;</Typography>
-        </DecoratedDivider>
-        <Typography className={classes.text} style={{paddingBottom: '1em'}}>
-          Click a sample image to try it
-        </Typography>
-
-        {/*TODO: Display properties set by trial and error. Rarely, this sizes so that I have more than 2 rows.
-                 This could surely be better, but it is plenty enough for a prototype. */}
-        <GridList cols={4} style={{justifyContent: 'center'}} spacing={document.documentElement.clientWidth * 0.01}>
-        {
-          randomImages().map(
-            (asset) => (
-              <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}>
-                <ImageTile
-                  className={classes.tile}
-                  asset={asset}
-                  onClick={ () => setInput({
-                    aid: asset.aid,
-                    url: asset.url,
-                  })}
-                />
-              </GridListTile>
+          {/*TODO: Display properties set by trial and error. Rarely, this sizes so that I have more than 2 rows.
+                   This could surely be better, but it is plenty enough for a prototype. */}
+          <GridList cols={4} style={{justifyContent: 'center'}} spacing={document.documentElement.clientWidth * 0.01}>
+          {
+            randomImages().map(
+              (asset) => (
+                <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}>
+                  <ImageTile
+                    className={classes.tile}
+                    asset={asset}
+                    onClick={ () => setInput({
+                      aid: asset.aid,
+                      url: asset.url,
+                    })}
+                  />
+                </GridListTile>
+              )
             )
-          )
-        }
-        </GridList>
-      </Container>
-    </DndProvider>
-  )
+          }
+          </GridList>
+        </Container>
+      </DndProvider>
+    )
+  }
+  else {
+    return (<BasicSearch input={input}/>);
+  }
 }
 
 function ImageTile({className, asset, onClick}) {
