@@ -56,7 +56,10 @@ export default function Start() {
       reader.onload = (e) => { resolve(e.target.result); };
       reader.readAsDataURL(file);
     });
-    setInput(url);
+    setInput({
+      file: file,
+      url: url,
+    });
   }
 
   //TODO: Placeholder. This will route us to another part of the app.
@@ -73,7 +76,8 @@ export default function Start() {
         </Typography>
         <InputZone style={{paddingBottom: '1em'}}
           onFileDrop   = { (f) => updateFileInput(f) }
-          onURLDrop    = { (u) => setInput(u) }
+          onURLDrop    = { (u) => setInput({url: u}) }
+          onAssetDrop  = { (a) => setInput(a) }
           onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
         />
         <DecoratedDivider style={{paddingBottom: '1em'}}>
@@ -88,12 +92,15 @@ export default function Start() {
         <GridList cols={4} style={{justifyContent: 'center'}} spacing={document.documentElement.clientWidth * 0.01}>
         {
           randomImages().map(
-            (url) => (
-              <GridListTile key={url} style={{height: '11vw', width: '11vw'}}>
+            (asset) => (
+              <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}>
                 <ImageTile
                   className={classes.tile}
-                  url={url}
-                  onClick={ () => setInput(url) }
+                  asset={asset}
+                  onClick={ () => setInput({
+                    aid: asset.aid,
+                    url: asset.url,
+                  })}
                 />
               </GridListTile>
             )
@@ -105,24 +112,24 @@ export default function Start() {
   )
 }
 
-function ImageTile({className, url, onClick}) {
+function ImageTile({className, asset, onClick}) {
   const [, drag] = useDrag({
-    type: NativeTypes.URL,
+    type: 'ASSET',
     item: {
-      urls: [url]
+      asset: asset
     }
   });
 
   return (
-    <img className={className} ref={drag} onClick={onClick} src={url} height='100%' width='100%' style={{objectFit: 'cover'}}/>
+    <img className={className} ref={drag} onClick={onClick} src={asset.url} height='100%' width='100%' style={{objectFit: 'cover'}}/>
   );
 }
 
-function InputZone({style, onFileDrop, onURLDrop, onFileUpload}) {
+function InputZone({style, onFileDrop, onURLDrop, onAssetDrop, onFileUpload}) {
   const classes = useStyles();
 
   const [, drop] = useDrop({
-    accept: [NativeTypes.FILE, NativeTypes.URL],
+    accept: [NativeTypes.FILE, NativeTypes.URL, 'ASSET'],
     drop: (item, monitor) => {
       if(monitor.getItemType() === NativeTypes.FILE) {
         const files = monitor.getItem().files;
@@ -140,6 +147,10 @@ function InputZone({style, onFileDrop, onURLDrop, onFileUpload}) {
            ext !== "jpeg" &&
            ext !== "png") return;
         onURLDrop(url);
+      }
+      else if(monitor.getItemType() === 'ASSET') {
+        const asset = monitor.getItem().asset;
+        onAssetDrop(asset);
       }
     },
   });
@@ -181,13 +192,13 @@ function DecoratedDivider({style, children}) {
 // TODO: Stub pending random image API call
 function randomImages() {
   return [
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/4723.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13800.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14105.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA3/2034.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13365.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13549.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/3985.jpg',
-    'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14769.jpg',
+    {aid:  4723, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/4723.jpg'},
+    {aid: 13800, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13800.jpg'},
+    {aid: 14105, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14105.jpg'},
+    {aid:  2034, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA3/2034.jpg'},
+    {aid: 13365, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13365.jpg'},
+    {aid: 13549, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13549.jpg'},
+    {aid:  3985, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/3985.jpg'},
+    {aid: 14769, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14769.jpg'},
   ];
 }
