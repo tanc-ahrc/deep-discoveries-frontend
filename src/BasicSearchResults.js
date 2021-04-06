@@ -34,7 +34,7 @@ export default function BasicSearchResults({input}) {
     else if(input.aid)  formData.append('query_aid',  input.aid);
     else                formData.append('query_url',  input.url);
     formData.append('searchengine', 'Style');
-    formData.append('resultcount', 999);
+    formData.append('resultcount', 111);
     const xhr = new XMLHttpRequest();
     xhr.open('POST', endpoint, true);
     xhr.onload = function() {
