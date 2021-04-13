@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicSearchSidebar({input}) {
+export default function BasicSearchSidebar({input, onDetailSearch}) {
   const classes = useStyles();
 
   return (
@@ -46,7 +46,7 @@ export default function BasicSearchSidebar({input}) {
           <Button className={classes.button} fullWidth={true}>New search</Button>
         </Grid>
         <Grid item xs={6} align='right'>
-          <Button className={classes.button} fullWidth={true}>Detail search</Button>
+          <Button className={classes.button} fullWidth={true} onClick={onDetailSearch}>Detail search</Button>
         </Grid>
       </Grid>
       <div style={{paddingTop: '6vh'}}/>
