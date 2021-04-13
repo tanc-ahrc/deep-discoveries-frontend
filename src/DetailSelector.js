@@ -87,7 +87,6 @@ export default function DetailSelector({src, shadingColor, shadingOpacity}) {
     stage.on("mouseenter", (e) => {
       select.visible(true);
       stage.container().style.cursor = 'none';
-      layer.draw();
     });
 
     stage.on("mouseleave", (e) => {
