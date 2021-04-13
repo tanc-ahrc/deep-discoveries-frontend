@@ -13,7 +13,7 @@ import 'konva/lib/shapes/Image';
 import 'konva/lib/shapes/Rect';
 import 'konva/lib/shapes/Circle';
 
-export default function DetailSelector({src, shadingColor, shadingOpacity}) {
+export default function DetailSelector({src, shadingColor, shadingOpacity, selections, setSelections}) {
   const containerId = 'imageviewer_component';
   const [image] = useState(new Image());
   image.src = src;
@@ -29,6 +29,8 @@ export default function DetailSelector({src, shadingColor, shadingOpacity}) {
     // Base selector size on the smaller factor. Magic constant arrived at by trial and error.
     const selectorSize = widthScale < heightScale ? image.naturalWidth  * scale * 0.025 * 0.5
                                                   : image.naturalHeight * scale * 0.025 * 0.5;
+
+    const newSelections = [];
 
     // TODO: Could make more sense to create a subclass of Rect.
     //       This would handle the boilerplate repetition in the
@@ -84,6 +86,12 @@ export default function DetailSelector({src, shadingColor, shadingOpacity}) {
     layer.add(select);
     stage.add(layer);
 
+    selections.forEach((selection) => {
+      selection.forEach((hole) => {
+        layer.add(hole);
+      });
+    });
+
     stage.on("mouseenter", (e) => {
       select.visible(true);
       stage.container().style.cursor = 'none';
@@ -109,11 +117,18 @@ export default function DetailSelector({src, shadingColor, shadingOpacity}) {
       const y = e.evt.layerY - selectorSize;
       const hole = initHole(x, y, 1);
       layer.add(hole);
+      newSelections.push(hole);
       layer.batchDraw();
     });
 
+    stage.on("mouseup dragend dragleave dragexit", () => {
+      const s = selections.slice();
+      s.push(newSelections);
+      setSelections(s);
+    });
+
     layer.draw();
-  }, [width, height, shadingColor, shadingOpacity, image]);
+  }, [width, height, shadingColor, shadingOpacity, image, selections, setSelections]);
 
   /* Resizing tricks following https://www.pluralsight.com/guides/re-render-react-component-on-window-resize */
   useEffect(
