@@ -2,11 +2,15 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import Slider from '@material-ui/core/Slider';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMemo, forwardRef, useState, useEffect } from 'react';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
 import Konva from 'konva/lib/Core';
 import 'konva/lib/shapes/Image';
@@ -22,8 +26,46 @@ const useStyles = makeStyles((theme) => ({
   masonryCell: {
     marginBottom: '10px',
   },
+  button: {
+    border: '2px solid #1F1F4D',
+    boxSizing: 'border-box',
+    borderRadius: '5px',
+    fontFamily: 'Jost',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '16px',
+    lineHeight: '23px',
+    textTransform: 'none',
+    color: '#292929',
+    '&:hover': {
+      backgroundColor: '#1F1F4D',
+      color: '#FFFFFF',
+    },
+  },
+  title: {
+    fontFamily: 'Jost',
+    fontStyle: 'normal',
+    fontWeight: 600,
+    fontSize: '20px',
+    lineHeight: '29px',
+    textAlign: 'left',
+    color: '#292929',
+  },
+  sliderText: {
+    fontFamily: 'Jost',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    fontSize: '12px',
+    lineHeight: '1.4',
+    display: 'flex',
+    alignItems: 'center',
+    textTransform: 'uppercase',
+  },
+  sliderButton: {
+    color: '#292929',
+    padding: 0,
+  },
 }));
-
 
 export default function BasicSearchResults({input}) {
   const classes = useStyles();
@@ -62,30 +104,55 @@ export default function BasicSearchResults({input}) {
 
   return (
     <Container>
-      <Typography>Similar Images</Typography>
-      <Grid container>
+      <Typography className={classes.title} align='left'>Similar Images</Typography>
+      <Grid style={{paddingTop: '3vh'}} container>
         <Grid item xs={3}>
-          <Button>Image view</Button>
+          <Button className={classes.button} fullWidth={true}>Image view</Button>
         </Grid>
         <Grid item xs={3}>
-          <Button>Area of likeness</Button>
+          <Button className={classes.button} fullWidth={true} endIcon={<InfoOutlinedIcon/>}>Areas of likeness</Button>
         </Grid>
         <Grid item xs={3}>
           <div/>
         </Grid>
-        <Grid item xs={3}>
-          <Slider
-            value={tileSize}
-            onChange={ (e, x) => { setTileSize(x); } }
-            step={1}
-            min={1}
-            max={3}
-          />
+        <Grid container item xs={3}>
+          <Grid item xs={12}>
+            <Typography className={classes.sliderText}>Image Size</Typography>
+          </Grid>
+          <Grid item xs={2} align='left'>
+            {/* Using IconButton 'disabled' can result in conditions where the images constantly switch
+              * between two sizes until the user clicks anywhere in the page, or the page crashes. */}
+            {/*disabled={tileSize === 1}*/}
+            <IconButton
+              classes={{root: classes.sliderButton}}
+              size='small'
+              onClick={() => setTileSize(tileSize => tileSize > 1 ? tileSize - 1 : tileSize)}>
+              <RemoveCircleOutlineOutlinedIcon/>
+            </IconButton>
+          </Grid>
+          <Grid item xs={8}>
+            <Slider
+              value={tileSize}
+              onChange={ (e, x) => { setTileSize(x); } }
+              step={1}
+              min={1}
+              max={3}
+            />
+          </Grid>
+          <Grid item xs={2} align='right'>
+            <IconButton
+              classes={{root: classes.sliderButton}}
+              size='small'
+              onClick={() => setTileSize(tileSize => tileSize < 3 ? tileSize + 1 : tileSize)}>
+              <AddCircleOutlineOutlinedIcon/>
+            </IconButton>
+          </Grid>
         </Grid>
       </Grid>
       <Masonry breakpointCols={5 - tileSize}
                className={classes.masonry}
-               columnClassName={classes.masonryColumn}>
+               columnClassName={classes.masonryColumn}
+               style={{paddingTop: '3vh'}}>
         {results.map((result) => (
           <ResultTile className={classes.masonryCell} key={result.aid} result={result} tileSize={tileSize}/>
         ))}
