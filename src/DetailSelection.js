@@ -31,7 +31,11 @@ export default function DetailSelection({input}) {
           </Container>
         </Grid>
         <Grid item xs={10}>
-          <DetailSelector src={input.url} shadingColor='black' shadingOpacity={0.5} selections={selections.stack[selections.current]} setSelections={pushSelection}/>
+          <DetailSelector src={input.url}
+                          shadingColor='black'
+                          shadingOpacity={0.5}
+                          selections={selections.stack[selections.current]}
+                          setSelections={pushSelection}/>
         </Grid>
       </Grid>
       <Grid container align='right'>
