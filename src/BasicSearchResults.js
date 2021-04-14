@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Slider from '@material-ui/core/Slider';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMemo, forwardRef, useState, useEffect } from 'react';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
@@ -191,7 +193,15 @@ function ResultTile({result, tileSize, ...props}) {
   );
 
   return (
-    <Card {...props}><CardMedia component={ResultImagePart}/></Card>
+    <Card {...props} variant='outlined' style={{borderColor:'black'}}>
+      <CardContent style={{margin: 0, padding: 0, paddingRight: 3}}>
+        <Grid container justify='space-between'>
+          <Grid item><Checkbox style={{margin: 0, padding: 0}}/></Grid>
+          <Grid item><Typography>{getCollectionInfo(result.collection).name}</Typography></Grid>
+        </Grid>
+      </CardContent>
+      <CardMedia component={ResultImagePart}/>
+    </Card>
   );
 }
 
