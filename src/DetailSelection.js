@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { useState } from 'react';
 import DetailSelector from './DetailSelector.js';
 
-export default function DetailSelection({input}) {
+export default function DetailSelection({input, cancelDetailSearch}) {
   const [selections, setSelections] = useState({
     stack: [[]],
     current: 0
@@ -43,7 +43,7 @@ export default function DetailSelection({input}) {
       <Grid container align='right'>
         <Grid item><div xs={8}/></Grid>
         <Grid item xs={2} align='right'>
-          <Button>Cancel</Button>
+          <Button onClick={cancelDetailSearch}>Cancel</Button>
         </Grid>
         <Grid item xs={2} align='right'>
           <Button>Update search</Button>

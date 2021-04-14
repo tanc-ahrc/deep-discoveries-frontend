@@ -8,7 +8,9 @@ export default function BasicSearch({input}) {
   const [detailSearch, setDetailSearch] = useState(false);
   if(detailSearch) {
     return (
-      <DetailSelection input={input}/>
+      <DetailSelection input={input}
+                       cancelDetailSearch={() => {setDetailSearch(false)}}
+      />
     )
   }
   else {
