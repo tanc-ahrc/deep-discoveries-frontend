@@ -19,6 +19,7 @@ export default function DetailSelection({input}) {
   }
   function undo() { setSelections({stack: selections.stack, current: selections.current - 1}); }
   function redo() { setSelections({stack: selections.stack, current: selections.current + 1}); }
+  function clear(){ setSelections({stack: [[]], current: 0}); }
 
   return (
     <Container style={{paddingTop: '10vh', paddingBottom: '10vh'}} height='90vh'>
@@ -28,6 +29,7 @@ export default function DetailSelection({input}) {
           <Container>
             <Button fullWidth={true} disabled={selections.current === 0}                           onClick={undo}>Undo</Button>
             <Button fullWidth={true} disabled={selections.current === selections.stack.length - 1} onClick={redo}>Redo</Button>
+            <Button fullWidth={true} disabled={selections.current === 0} onClick={clear}>Clear</Button>
           </Container>
         </Grid>
         <Grid item xs={10}>
