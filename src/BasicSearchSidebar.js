@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicSearchSidebar({input, onDetailSearch}) {
+export default function BasicSearchSidebar({input, onNewSearch, onDetailSearch}) {
   const classes = useStyles();
 
   return (
@@ -43,7 +43,7 @@ export default function BasicSearchSidebar({input, onDetailSearch}) {
       <img src={input.url} width='100%'/>
       <Grid container style={{paddingTop: '3vh'}} spacing={2}>
         <Grid item xs={6}>
-          <Button className={classes.button} fullWidth={true}>New search</Button>
+          <Button className={classes.button} fullWidth={true} onClick={onNewSearch}>New search</Button>
         </Grid>
         <Grid item xs={6} align='right'>
           <Button className={classes.button} fullWidth={true} onClick={onDetailSearch}>Detail search</Button>

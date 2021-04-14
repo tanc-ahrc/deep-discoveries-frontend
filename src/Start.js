@@ -111,7 +111,7 @@ export default function Start() {
     )
   }
   else {
-    return (<BasicSearch input={input}/>);
+    return (<BasicSearch input={input} setInput={setInput}/>);
   }
 }
 
