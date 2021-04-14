@@ -6,19 +6,32 @@ import { useState } from 'react';
 import DetailSelector from './DetailSelector.js';
 
 export default function DetailSelection({input}) {
-  const [selections, setSelections] = useState([]);
+  const [selections, setSelections] = useState({
+    stack: [[]],
+    current: 0
+  });
+
+  function pushSelection(newSelection) {
+    const newCurrent = selections.current + 1;
+    const newStack = selections.stack.slice(0, newCurrent);
+    newStack.push(newSelection);
+    setSelections({stack: newStack, current: newCurrent});
+  }
+  function undo() { setSelections({stack: selections.stack, current: selections.current - 1}); }
+  function redo() { setSelections({stack: selections.stack, current: selections.current + 1}); }
+
   return (
     <Container style={{paddingTop: '10vh', paddingBottom: '10vh'}} height='90vh'>
       <Typography>Click and draw over the image to highlight areas of interest.</Typography>
       <Grid container>
         <Grid item xs={2}>
           <Container>
-            <Button fullWidth={true} disabled={selections.length === 0} onClick={() => {setSelections(selections.slice(0, -1))}}>Undo</Button>
-            <Button fullWidth={true}>Redo</Button>
+            <Button fullWidth={true} disabled={selections.current === 0}                           onClick={undo}>Undo</Button>
+            <Button fullWidth={true} disabled={selections.current === selections.stack.length - 1} onClick={redo}>Redo</Button>
           </Container>
         </Grid>
         <Grid item xs={10}>
-          <DetailSelector src={input.url} shadingColor='black' shadingOpacity={0.5} selections={selections} setSelections={setSelections}/>
+          <DetailSelector src={input.url} shadingColor='black' shadingOpacity={0.5} selections={selections.stack[selections.current]} setSelections={pushSelection}/>
         </Grid>
       </Grid>
       <Grid container align='right'>
