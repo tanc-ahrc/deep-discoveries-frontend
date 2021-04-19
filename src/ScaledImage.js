@@ -9,7 +9,7 @@ import 'konva/lib/shapes/Image';
  * All changes copyright (c) 2021 Crown Copyright (The National Archives), MIT license
  * For MIT license, see https://github.com/tanc-ahrc/deep-discoveries-interface-building-blocks/blob/master/LICENSE.
  */
-export default function ScaledImage({id, src}) {
+export default function ScaledImage({id, src, tileSize, ...props}) {
   const containerId = 'ScaledImage_' + id;
   const [width, setWidth] = useState(0);
   const [image] = useState(new Image());
@@ -54,5 +54,5 @@ export default function ScaledImage({id, src}) {
       }
     }, [containerId, image, width]);
 
-    return (<div id={containerId}/>);
+    return (<div id={containerId} {...props}/>);
 }
