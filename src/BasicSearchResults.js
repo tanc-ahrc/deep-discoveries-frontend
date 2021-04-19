@@ -14,7 +14,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
-import ResultImage from './ResultImage.js';
+import ScaledImage from './ScaledImage.js';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -190,10 +190,10 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
   //TODO: React docs indicate that there is no semantic guarantee here, is
   //      material-ui relying on the semantics?
   //      See https://reactjs.org/docs/hooks-reference.html#usememo
-  const ResultImagePart = useMemo(
+  const ImagePart = useMemo(
     () =>
       forwardRef((p, ref) => (
-        <ResultImage result={result} tileSize={tileSize}/>
+        <ScaledImage id={result.aid} src={result.url} tileSize={tileSize}/>
       )),
       [result, tileSize]
   );
@@ -211,7 +211,7 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
           <Grid item><Typography>{getCollectionInfo(result.collection).name}</Typography></Grid>
         </Grid>
       </CardContent>
-      <CardMedia component={ResultImagePart}/>
+      <CardMedia component={ImagePart}/>
     </Card>
   );
 }
