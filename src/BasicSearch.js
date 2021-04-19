@@ -48,6 +48,7 @@ export default function BasicSearch({input, setInput}) {
       <DetailSelection input={input}
                        results={results}
                        setResults={setResults}
+                       detailList={detailList}
                        cancelDetailSearch={() => {setDetailSearch(false)}}
       />
     )
