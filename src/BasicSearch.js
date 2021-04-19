@@ -5,10 +5,13 @@ import BasicSearchSidebar from './BasicSearchSidebar.js';
 import BasicSearchResults from './BasicSearchResults.js';
 
 export default function BasicSearch({input, setInput}) {
+  const [results, setResults] = useState([]);
   const [detailSearch, setDetailSearch] = useState(false);
   if(detailSearch) {
     return (
       <DetailSelection input={input}
+                       results={results}
+                       setResults={setResults}
                        cancelDetailSearch={() => {setDetailSearch(false)}}
       />
     )
@@ -20,7 +23,7 @@ export default function BasicSearch({input, setInput}) {
           <BasicSearchSidebar input={input} onNewSearch={() => {setInput(undefined);}} onDetailSearch={() => {setDetailSearch(true)}}/>
         </Grid>
         <Grid item xs={9}>
-          <BasicSearchResults input={input}/>
+          <BasicSearchResults input={input} results={results} setResults={setResults}/>
         </Grid>
       </Grid>
     );

@@ -69,10 +69,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicSearchResults({input}) {
+export default function BasicSearchResults({input, results, setResults}) {
   const classes = useStyles();
 
-  const [results, setResults] = useState([]);
   const [tileSize, setTileSize] = useState(2);
 
   function getSimilar() {
@@ -102,7 +101,7 @@ export default function BasicSearchResults({input}) {
     xhr.send(formData);
   }
 
-  useEffect(getSimilar, [input]);
+  useEffect(getSimilar, [input, setResults]);
 
   return (
     <Container>
