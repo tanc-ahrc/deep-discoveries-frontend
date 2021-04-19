@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicSearchResults({input, results, setResults}) {
+export default function BasicSearchResults({input, results, setResults, detailList, setDetailList}) {
   const classes = useStyles();
 
   const [tileSize, setTileSize] = useState(2);
@@ -155,7 +155,7 @@ export default function BasicSearchResults({input, results, setResults}) {
                columnClassName={classes.masonryColumn}
                style={{paddingTop: '3vh'}}>
         {results.map((result) => (
-          <ResultTile className={classes.masonryCell} key={result.aid} result={result} tileSize={tileSize}/>
+          <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} tileSize={tileSize}/>
         ))}
       </Masonry>
     </Container>
@@ -178,7 +178,15 @@ function getCollectionInfo(collection) {
   return c;
 }
 
-function ResultTile({result, tileSize, ...props}) {
+function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
+  let isChecked = false;
+  for(const detail of detailList) {
+    if(result.aid === detail.aid) {
+      isChecked = true;
+      break;
+    }
+  }
+
   //Following https://material-ui.com/guides/composition/#caveat-with-inlining
   //TODO: React docs indicate that there is no semantic guarantee here, is
   //      material-ui relying on the semantics?
@@ -195,7 +203,12 @@ function ResultTile({result, tileSize, ...props}) {
     <Card {...props} variant='outlined' style={{borderColor:'black'}}>
       <CardContent style={{margin: 0, padding: 0, paddingRight: 3}}>
         <Grid container justify='space-between'>
-          <Grid item><Checkbox style={{margin: 0, padding: 0}}/></Grid>
+          <Grid item>
+            <Checkbox style={{margin: 0, padding: 0}}
+                      checked={isChecked}
+                      onChange={() => { setDetailList({type: isChecked ? 'remove' : 'add', payload: result}); }}
+            />
+          </Grid>
           <Grid item><Typography>{getCollectionInfo(result.collection).name}</Typography></Grid>
         </Grid>
       </CardContent>

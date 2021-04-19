@@ -16,6 +16,29 @@ export default function BasicSearch({input, setInput}) {
     },
     []
   );
+  const [detailList, setDetailList] = useReducer(
+    (oldDetailList, action) => {
+      const newDetail = action.payload;
+      switch(action.type) {
+        case 'add': {
+          return oldDetailList.concat(newDetail);
+        }
+        case 'remove': {
+          for(let i = 0; i < oldDetailList.length; i++) {
+            if(newDetail.aid === oldDetailList[i].aid) {
+              oldDetailList.splice(i, 1);
+              return oldDetailList.slice();
+            }
+          }
+
+          //TODO: This function gets called twice when we hit the checkbox, so we always see this
+          //      warning. We must return a clone of the list in this case: even though it has not
+          //      changed, the checkbox will not get cleared unless we make it look like it has.
+          console.warn('Attempted to remove non-member from detailList', newDetail, oldDetailList);
+          return oldDetailList.slice();
+        }
+        default: throw new Error();
+      }
     },
     []
   );
@@ -36,7 +59,7 @@ export default function BasicSearch({input, setInput}) {
           <BasicSearchSidebar input={input} onNewSearch={() => {setInput(undefined);}} onDetailSearch={() => {setDetailSearch(true)}}/>
         </Grid>
         <Grid item xs={9}>
-          <BasicSearchResults input={input} results={results} setResults={setResults}/>
+          <BasicSearchResults input={input} results={results} setResults={setResults} detailList={detailList} setDetailList={setDetailList}/>
         </Grid>
       </Grid>
     );
