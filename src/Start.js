@@ -17,6 +17,7 @@ import { NativeTypes, HTML5Backend } from 'react-dnd-html5-backend';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BasicSearch from './BasicSearch.js';
+import SearchDatum from './SearchDatum.js';
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -57,10 +58,9 @@ export default function Start() {
       reader.onload = (e) => { resolve(e.target.result); };
       reader.readAsDataURL(file);
     });
-    setInput({
-      file: file,
-      url: url,
-    });
+    const datum = new SearchDatum(0, url);
+    datum.file = file;
+    setInput(datum);
   }
 
   if(typeof input === typeof undefined) {
@@ -75,7 +75,7 @@ export default function Start() {
           </Typography>
           <InputZone style={{paddingBottom: '1em'}}
             onFileDrop   = { (f) => updateFileInput(f) }
-            onURLDrop    = { (u) => setInput({url: u}) }
+            onURLDrop    = { (u) => setInput(new SearchDatum(0, u)) }
             onAssetDrop  = { (a) => setInput(a) }
             onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
           />
@@ -96,10 +96,7 @@ export default function Start() {
                   <ImageTile
                     className={classes.tile}
                     asset={asset}
-                    onClick={ () => setInput({
-                      aid: asset.aid,
-                      url: asset.url,
-                    })}
+                    onClick={ () => setInput(new SearchDatum(asset.aid, asset.url)) }
                   />
                 </GridListTile>
               )

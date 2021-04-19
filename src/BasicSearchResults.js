@@ -15,6 +15,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
 import ScaledImage from './ScaledImage.js';
+import SearchDatum from './SearchDatum.js';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -95,7 +96,11 @@ export default function BasicSearchResults({input, results, setResults, detailLi
         return r.collection != null && getCollectionInfo(r.collection).name != null;
       });
 
-      setResults({type: 'replace', payload: initialResults});
+      setResults({type: 'replace', payload: initialResults.map((x) => {
+        const y = new SearchDatum(x.aid, x.url);
+        y.collection = x.collection;
+        return y;
+      })});
     };
     xhr.send(formData);
   }
@@ -205,7 +210,7 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
           <Grid item>
             <Checkbox style={{margin: 0, padding: 0}}
                       checked={isChecked}
-                      onChange={() => { setDetailList({type: isChecked ? 'remove' : 'add', payload: result}); }}
+                      onChange={() => { setDetailList({type: isChecked ? 'remove' : 'add', payload: result.clone()}); }}
             />
           </Grid>
           <Grid item><Typography>{getCollectionInfo(result.collection).name}</Typography></Grid>
