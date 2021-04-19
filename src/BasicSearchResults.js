@@ -96,7 +96,7 @@ export default function BasicSearchResults({input, results, setResults}) {
         return r.collection != null && getCollectionInfo(r.collection).name != null;
       });
 
-      setResults(initialResults);
+      setResults({type: 'replace', payload: initialResults});
     };
     xhr.send(formData);
   }
