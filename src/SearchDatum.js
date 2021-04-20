@@ -10,10 +10,14 @@ export default class SearchDatum {
 
   clone() {
     const c = Object.create(this);
-    c.selections = {
-      stack: [this.selections.stack.map((a) => { return a.slice(); })],
-      current: this.selections.current,
-    }
+    c.selections = this.cloneSelections();
     return c;
+  }
+
+  cloneSelections() {
+    return {
+      stack: this.selections.stack.map((a) => { return a.slice(); }),
+      current: this.selections.current,
+    };
   }
 }

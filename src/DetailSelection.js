@@ -61,14 +61,14 @@ export default function DetailSelection({input, detailList, cancelDetailSearch})
                        key={input.aid}
                        id={input.aid}
                        src={input.url}
-                       onClick={()=>{setSelections(input.selections);setDetailImage(input);}}
+                       onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
           />
           {detailList.map((detailInput) => (
             <ScaledImage className={classes.masonryCell}
                          key={detailInput.aid}
                          id={detailInput.aid}
                          src={detailInput.url}
-                         onClick={()=>{setSelections(detailInput.selections);setDetailImage(detailInput)}}
+                         onClick={()=>{setSelections(detailInput.cloneSelections()); setDetailImage(detailInput)}}
             />
           ))}
         </Masonry>
