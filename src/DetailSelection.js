@@ -83,6 +83,25 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
       };
     }
 
+    function selectionsMatch() {
+      const s = selectionsChomp();
+      if(s.stack.length !== detailImage.selections.stack.length) return false;
+      if(s.current !== detailImage.selections.current) return false;
+      for(let i = 0; i < s.stack.length; i++) {
+        if(s.stack[i].length !== detailImage.selections.stack[i].length) return false;
+      }
+      for(let i = 0; i < s.stack.length; i++) {
+        for(let j = 0; j < s.stack[i].length; j++) {
+          const s1 = s.stack[i][j];
+          const s2 = detailImage.selections.stack[i][j];
+          if(s1.radius !== s2.radius) return false;
+          if(s1.x !== s2.x) return false;
+          if(s1.y !== s2.y) return false;
+        }
+      }
+      return true;
+    }
+
     return (
       <Container style={{paddingTop: '10vh', paddingBottom: '10vh'}} height='90vh'>
         <Typography>Click and draw over the image to highlight areas of interest.</Typography>
@@ -115,6 +134,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
                       else { setDetailList({type: 'update', payload: d}); }
                       setDetailImage(undefined);
                     }}
+                    disabled={selectionsMatch()}
             >Update selections</Button>
           </Grid>
         </Grid>
