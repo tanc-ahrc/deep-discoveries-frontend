@@ -124,7 +124,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
         <Grid container align='right'>
           <Grid item><div xs={8}/></Grid>
           <Grid item xs={2} align='right'>
-            <Button onClick={()=>{setDetailImage(undefined);}}>Cancel selections</Button>
+            <Button onClick={()=>{setDetailImage(undefined);}}>Cancel</Button>
           </Grid>
           <Grid item xs={2} align='right'>
             <Button onClick={()=>{
