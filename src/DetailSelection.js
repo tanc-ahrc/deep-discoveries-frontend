@@ -43,15 +43,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
   if(typeof detailImage === typeof undefined) {
     return (
       <Container>
-        <Grid container>
-          <Grid item><div xs={8}/></Grid>
-          <Grid item xs={2}>
-            <Button onClick={cancelDetailSearch}>Cancel</Button>
-          </Grid>
-          <Grid item xs={2}>
-            <Button onClick={cancelDetailSearch}>Update search</Button>
-          </Grid>
-        </Grid>
+        <Button onClick={cancelDetailSearch}>Update search</Button>
         <Masonry
           className={classes.masonry}
           columnClassName={classes.masonryColumn}
