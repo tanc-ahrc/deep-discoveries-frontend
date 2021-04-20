@@ -1,3 +1,8 @@
+//TODO: The {stack, current} entity should really be
+//      a proper class with its own methods, rather
+//      than being externally manipulated all over
+//      the place.
+
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
