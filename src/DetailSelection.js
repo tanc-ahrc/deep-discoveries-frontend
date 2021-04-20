@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DetailSelection({input, detailList, cancelDetailSearch}) {
+export default function DetailSelection({input, setInput, detailList, setDetailList, cancelDetailSearch}) {
   const classes = useStyles();
 
   const [detailImage, setDetailImage] = useState();
@@ -76,6 +76,13 @@ export default function DetailSelection({input, detailList, cancelDetailSearch})
     );
   }
   else {
+    function selectionsChomp() {
+      return {
+        stack: selections.stack.slice(0, selections.current + 1),
+        current: selections.current,
+      };
+    }
+
     return (
       <Container style={{paddingTop: '10vh', paddingBottom: '10vh'}} height='90vh'>
         <Typography>Click and draw over the image to highlight areas of interest.</Typography>
@@ -101,7 +108,14 @@ export default function DetailSelection({input, detailList, cancelDetailSearch})
             <Button onClick={()=>{setDetailImage(undefined);}}>Cancel selections</Button>
           </Grid>
           <Grid item xs={2} align='right'>
-            <Button>Update selections</Button>
+            <Button onClick={()=>{
+                      const d = detailImage.clone();
+                      d.selections = selectionsChomp();
+                      if(d.aid === input.aid) { setInput(d); }
+                      else { setDetailList({type: 'update', payload: d}); }
+                      setDetailImage(undefined);
+                    }}
+            >Update selections</Button>
           </Grid>
         </Grid>
       </Container>

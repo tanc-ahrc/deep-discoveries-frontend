@@ -37,6 +37,9 @@ export default function BasicSearch({input, setInput}) {
           console.warn('Attempted to remove non-member from detailList', newDetail, oldDetailList);
           return oldDetailList.slice();
         }
+        case 'update': {
+          return oldDetailList.map((d) => { return d.aid === newDetail.aid ? newDetail: d; });
+        }
         default: throw new Error();
       }
     },
@@ -46,9 +49,11 @@ export default function BasicSearch({input, setInput}) {
   if(detailSearch) {
     return (
       <DetailSelection input={input}
+                       setInput={setInput}
                        results={results}
                        setResults={setResults}
                        detailList={detailList}
+                       setDetailList={setDetailList}
                        cancelDetailSearch={() => {setDetailSearch(false)}}
       />
     )
