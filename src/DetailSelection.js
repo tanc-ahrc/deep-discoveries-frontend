@@ -50,6 +50,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
   if(typeof detailImage === typeof undefined) {
     return (
       <Container className={classes.outerComponent}>
+        <Typography>Click an image to highlight areas of interest</Typography>
         <Button onClick={cancelDetailSearch}>Update search</Button>
         <Masonry
           className={classes.masonry}
