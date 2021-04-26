@@ -3,7 +3,7 @@
  *       world.
  * TODO: There must be a better way to space out the
  *       Container's components than putting
- *       paddingBottom: 1em everywhere.
+ *       paddingBottom: 1rem everywhere.
  */
 
 import GridList from '@material-ui/core/GridList';
@@ -67,19 +67,19 @@ export default function Start() {
           <Typography variant='h1' align='center'>
             Explore our National Collection
           </Typography>
-          <Typography style={{color: '#717171', paddingBottom: '1em'}} align='center'>
+          <Typography style={{color: '#717171', paddingBottom: '1rem'}} align='center'>
             Search with an image to find similar results
           </Typography>
-          <InputZone style={{paddingBottom: '1em'}}
+          <InputZone style={{paddingBottom: '1rem'}}
             onFileDrop   = { (f) => updateFileInput(f) }
             onURLDrop    = { (u) => setInput(new SearchDatum(0, u)) }
             onAssetDrop  = { (a) => setInput(a) }
             onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
           />
-          <DecoratedDivider style={{paddingBottom: '1em'}}>
+          <DecoratedDivider style={{paddingBottom: '1rem'}}>
             <Typography>&nbsp;Or&nbsp;</Typography>
           </DecoratedDivider>
-          <Typography style={{paddingBottom: '1em'}} align='center'>
+          <Typography style={{paddingBottom: '1rem'}} align='center'>
             Click a sample image to try it
           </Typography>
 
