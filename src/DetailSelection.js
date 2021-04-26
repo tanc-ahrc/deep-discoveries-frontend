@@ -61,6 +61,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
           </Grid>
           <Grid item xs={10}>
             <Masonry
+              breakpointCols={3}
               className={classes.masonry}
               columnClassName={classes.masonryColumn}
             >
