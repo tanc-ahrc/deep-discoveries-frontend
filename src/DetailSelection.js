@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
       opacity: theme.palette.action.hoverOpacity,
     },
   },
-  outerComponent: {...theme.outerComponent},
 }));
 
 export default function DetailSelection({input, setInput, detailList, setDetailList, cancelDetailSearch}) {
@@ -49,7 +48,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
 
   if(typeof detailImage === typeof undefined) {
     return (
-      <Grid container className={classes.outerComponent}>
+      <Grid container>
         <Grid item xs={12}>
           <Typography>Click an image to highlight areas of interest</Typography>
         </Grid>
@@ -107,7 +106,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
     }
 
     return (
-      <Grid container className={classes.outerComponent}>
+      <Grid container>
         <Grid item xs={12}>
           <Typography>Click and draw over the image to highlight areas of interest.</Typography>
         </Grid>

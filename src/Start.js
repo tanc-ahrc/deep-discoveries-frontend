@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer',
     },
   },
-  outerComponent: {...theme.outerComponent},
 }));
 
 export default function Start() {
@@ -64,7 +63,7 @@ export default function Start() {
   if(typeof input === typeof undefined) {
     return (
       <DndProvider backend={HTML5Backend}>
-        <Container className={classes.outerComponent} style={{width: '50vw'}} justify='center'>
+        <Container style={{width: '50vw'}} justify='center'>
           <Typography variant='h1' align='center'>
             Explore our National Collection
           </Typography>

@@ -1,17 +1,10 @@
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import { useState, useReducer } from 'react';
 import DetailSelection from './DetailSelection.js';
 import BasicSearchSidebar from './BasicSearchSidebar.js';
 import BasicSearchResults from './BasicSearchResults.js';
 
-const useStyles = makeStyles((theme) => ({
-  outerComponent: {...theme.outerComponent},
-}));
-
 export default function BasicSearch({input, setInput}) {
-  const classes = useStyles();
-
   const [results, setResults] = useReducer(
     (oldResults, action) => {
       const newResult = action.payload;
@@ -55,21 +48,19 @@ export default function BasicSearch({input, setInput}) {
   const [detailSearch, setDetailSearch] = useState(false);
   if(detailSearch) {
     return (
-      <div className={classes.outerComponent}>
-        <DetailSelection input={input}
-                         setInput={setInput}
-                         results={results}
-                         setResults={setResults}
-                         detailList={detailList}
-                         setDetailList={setDetailList}
-                         cancelDetailSearch={() => {setDetailSearch(false)}}
-        />
-      </div>
+      <DetailSelection input={input}
+                       setInput={setInput}
+                       results={results}
+                       setResults={setResults}
+                       detailList={detailList}
+                       setDetailList={setDetailList}
+                       cancelDetailSearch={() => {setDetailSearch(false)}}
+      />
     )
   }
   else {
     return (
-      <Grid container className={classes.outerComponent} spacing={3}>
+      <Grid container spacing={3}>
         <Grid item xs={3}>
           <BasicSearchSidebar input={input} onNewSearch={() => {setInput(undefined);}} onDetailSearch={() => {setDetailSearch(true)}}/>
         </Grid>

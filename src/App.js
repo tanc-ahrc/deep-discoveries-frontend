@@ -49,18 +49,17 @@ const theme = createMuiTheme({
       },
     },
   },
-
-  // Seems I'm allowed to add arbitrary
-  // attributes to my theme
-  outerComponent: {
-    paddingTop: '5vh',
-  },
 });
 
+// The div will be the outer wrapping
+// for all screens, so its spacing-out
+// styling applies to all screens.
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Start/>
+      <div style={{paddingTop: '5vh'}}>
+        <Start/>
+      </div>
     </ThemeProvider>
   );
 }
