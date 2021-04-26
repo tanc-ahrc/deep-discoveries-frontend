@@ -47,7 +47,7 @@ const theme = createMuiTheme({
     },
     MuiSelect: {
       root: {
-        border: '2px solid #E9E9E9',
+        border: '2px solid',
         boxSizing: 'border-box',
         borderRadius: '5px',
       },
