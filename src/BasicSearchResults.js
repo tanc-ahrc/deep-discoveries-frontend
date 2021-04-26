@@ -71,7 +71,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
   return (
     <Container>
       <Typography variant='h2' align='left'>Similar Images</Typography>
-      <Grid style={{paddingTop: '3vh'}} container>
+      <Grid container>
         <Grid item xs={3}>
           <Button fullWidth={true}>Image view</Button>
         </Grid>
