@@ -107,31 +107,14 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
     }
 
     return (
-      <Container className={classes.outerComponent}>
-        <Typography>Click and draw over the image to highlight areas of interest.</Typography>
-        <Grid container>
-          <Grid item xs={2}>
-            <Container>
-              <Button fullWidth={true} disabled={selections.current === 0}                           onClick={undo}>Undo</Button>
-              <Button fullWidth={true} disabled={selections.current === selections.stack.length - 1} onClick={redo}>Redo</Button>
-              <Button fullWidth={true} disabled={selections.current === 0} onClick={clear}>Clear</Button>
-            </Container>
-          </Grid>
-          <Grid item xs={10}>
-            <DetailSelector src={detailImage.url}
-                            shadingColor='black'
-                            shadingOpacity={0.5}
-                            selections={selections.stack[selections.current]}
-                            setSelections={pushSelection}/>
-          </Grid>
+      <Grid container className={classes.outerComponent}>
+        <Grid item xs={12}>
+          <Typography>Click and draw over the image to highlight areas of interest.</Typography>
         </Grid>
-        <Grid container align='right'>
-          <Grid item><div xs={8}/></Grid>
-          <Grid item xs={2} align='right'>
-            <Button onClick={()=>{setDetailImage(undefined);}}>Cancel</Button>
-          </Grid>
-          <Grid item xs={2} align='right'>
-            <Button onClick={()=>{
+        <Grid container xs={2}>
+          <Grid item xs={11}>
+            <Button fullWidth={true} onClick={()=>{setDetailImage(undefined);}}>Cancel</Button>
+            <Button fullWidth={true} onClick={()=>{
                       const d = detailImage.clone();
                       d.selections = selectionsChomp();
                       if(d.aid === input.aid) { setInput(d); }
@@ -140,9 +123,20 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
                     }}
                     disabled={selectionsMatch()}
             >Update selections</Button>
+            <div style={{paddingTop: '2vh'}}/>
+            <Button fullWidth={true} disabled={selections.current === 0}                           onClick={undo}>Undo</Button>
+            <Button fullWidth={true} disabled={selections.current === selections.stack.length - 1} onClick={redo}>Redo</Button>
+            <Button fullWidth={true} disabled={selections.current === 0} onClick={clear}>Clear</Button>
           </Grid>
         </Grid>
-      </Container>
+        <Grid item xs={10}>
+          <DetailSelector src={detailImage.url}
+                          shadingColor='black'
+                          shadingOpacity={0.5}
+                          selections={selections.stack[selections.current]}
+                          setSelections={pushSelection}/>
+        </Grid>
+      </Grid>
     );
   }
 }
