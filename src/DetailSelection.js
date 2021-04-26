@@ -49,30 +49,39 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
 
   if(typeof detailImage === typeof undefined) {
     return (
-      <Container className={classes.outerComponent}>
-        <Typography>Click an image to highlight areas of interest</Typography>
-        <Button onClick={cancelDetailSearch}>Update search</Button>
-        <Masonry
-          className={classes.masonry}
-          columnClassName={classes.masonryColumn}
-          style={{paddingTop: '3vh'}}
-        >
-          <ScaledImage className={classes.masonryCell}
-                       key={input.aid}
-                       id={input.aid}
-                       src={input.url}
-                       onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
-          />
-          {detailList.map((d) => (
-            <ScaledImage className={classes.masonryCell}
-                         key={d.aid}
-                         id={d.aid}
-                         src={d.url}
-                         onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d)}}
-            />
-          ))}
-        </Masonry>
-      </Container>
+      <Grid container className={classes.outerComponent}>
+        <Grid item xs={12}>
+          <Typography>Click an image to highlight areas of interest</Typography>
+        </Grid>
+        <Grid container>
+          <Grid container xs={2}>
+            <Grid item xs={11}>
+              <Button fullWidth={true} onClick={cancelDetailSearch}>Update search</Button>
+            </Grid>
+          </Grid>
+          <Grid item xs={10}>
+            <Masonry
+              className={classes.masonry}
+              columnClassName={classes.masonryColumn}
+            >
+              <ScaledImage className={classes.masonryCell}
+                           key={input.aid}
+                           id={input.aid}
+                           src={input.url}
+                           onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
+              />
+              {detailList.map((d) => (
+                <ScaledImage className={classes.masonryCell}
+                             key={d.aid}
+                             id={d.aid}
+                             src={d.url}
+                             onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d)}}
+                />
+              ))}
+            </Masonry>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
   else {
