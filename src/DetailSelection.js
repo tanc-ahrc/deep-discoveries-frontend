@@ -64,18 +64,12 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
               className={classes.masonry}
               columnClassName={classes.masonryColumn}
             >
-              <ScaledImage className={classes.masonryCell}
-                           key={input.aid}
-                           id={input.aid}
-                           src={input.url}
-                           onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
-              />
-              {detailList.map((d) => (
+              {[input].concat(detailList).map((d) => (
                 <ScaledImage className={classes.masonryCell}
                              key={d.aid}
                              id={d.aid}
                              src={d.url}
-                             onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d)}}
+                             onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d);}}
                 />
               ))}
             </Masonry>
