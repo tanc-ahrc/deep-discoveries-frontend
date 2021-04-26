@@ -6,17 +6,21 @@ const theme = createMuiTheme({
     fontFamily: '"Open Sans", sans-serif',
     fontWeightRegular: 500,
     h1: {
-     fontSize: '1.5em',
+     fontSize: '2rem',
+     lineHeight: '3rem', //same line height throughout, so first visible component appears in consistent place
     },
     h2: {
       fontWeight: 600,
-      fontSize: '20px',
-      lineHeight: '29px',
+      fontSize: '1.5rem',
+      lineHeight: '3rem', //same line height throughout, so first visible component appears in consistent place
     },
     h3: {
-      fontSize: '20px',
-      lineHeight: '60px',
-    }
+      fontSize: '1.3rem',
+      lineHeight: '3rem', //same line height throughout, so first visible component appears in consistent place
+    },
+    button: {
+      fontSize: '1.1rem',
+    },
   },
   palette: {
     primary: {
@@ -35,9 +39,6 @@ const theme = createMuiTheme({
         border: '2px solid',
         boxSizing: 'border-box',
         borderRadius: '5px',
-        fontStyle: 'normal',
-        fontSize: '16px',
-        lineHeight: '23px',
         textTransform: 'none',
         '&:hover': {
           backgroundColor: '#1F1F4D',
