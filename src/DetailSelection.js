@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
       opacity: theme.palette.action.hoverOpacity,
     },
   },
+  outerComponent: {...theme.outerComponent},
 }));
 
 export default function DetailSelection({input, setInput, detailList, setDetailList, cancelDetailSearch}) {
@@ -48,7 +49,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
 
   if(typeof detailImage === typeof undefined) {
     return (
-      <Container>
+      <Container className={classes.outerComponent}>
         <Button onClick={cancelDetailSearch}>Update search</Button>
         <Masonry
           className={classes.masonry}
@@ -101,7 +102,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
     }
 
     return (
-      <Container style={{paddingTop: '10vh', paddingBottom: '10vh'}} height='90vh'>
+      <Container className={classes.outerComponent}>
         <Typography>Click and draw over the image to highlight areas of interest.</Typography>
         <Grid container>
           <Grid item xs={2}>

@@ -49,6 +49,12 @@ const theme = createMuiTheme({
       },
     },
   },
+
+  // Seems I'm allowed to add arbitrary
+  // attributes to my theme
+  outerComponent: {
+    paddingTop: '5vh',
+  },
 });
 
 export default function App() {
