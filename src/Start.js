@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tile: {
     '&:hover': {
-      opacity: 0.8,
+      opacity: theme.palette.action.hoverOpacity,
       cursor: 'pointer',
     },
   },

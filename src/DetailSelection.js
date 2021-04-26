@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '10px',
     '&:hover': {
       cursor: 'pointer',
+      opacity: theme.palette.action.hoverOpacity,
     },
   },
 }));

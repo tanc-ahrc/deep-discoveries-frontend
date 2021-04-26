@@ -21,6 +21,9 @@ const theme = createMuiTheme({
     text: {
       primary: '#292929',
     },
+    action: {
+      hoverOpacity: 0.8,
+    }
   },
   overrides: {
     MuiButton: {
