@@ -50,7 +50,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Typography>Click an image to highlight areas of interest</Typography>
+          <Typography variant='h3'>Click an image to highlight areas of interest</Typography>
         </Grid>
         <Grid container>
           <Grid container xs={2}>
@@ -108,7 +108,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Typography>Click and draw over the image to highlight areas of interest.</Typography>
+          <Typography variant='h3'>Click and draw over the image to highlight areas of interest.</Typography>
         </Grid>
         <Grid container xs={2}>
           <Grid item xs={11}>

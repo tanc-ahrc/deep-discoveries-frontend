@@ -13,6 +13,10 @@ const theme = createMuiTheme({
       fontSize: '20px',
       lineHeight: '29px',
     },
+    h3: {
+      fontSize: '20px',
+      lineHeight: '60px',
+    }
   },
   palette: {
     primary: {
