@@ -28,45 +28,6 @@ const useStyles = makeStyles((theme) => ({
   masonryCell: {
     marginBottom: '10px',
   },
-  button: {
-    border: '2px solid #1F1F4D',
-    boxSizing: 'border-box',
-    borderRadius: '5px',
-    fontFamily: 'Jost',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '16px',
-    lineHeight: '23px',
-    textTransform: 'none',
-    color: '#292929',
-    '&:hover': {
-      backgroundColor: '#1F1F4D',
-      color: '#FFFFFF',
-    },
-  },
-  title: {
-    fontFamily: 'Jost',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '20px',
-    lineHeight: '29px',
-    textAlign: 'left',
-    color: '#292929',
-  },
-  sliderText: {
-    fontFamily: 'Jost',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '12px',
-    lineHeight: '1.4',
-    display: 'flex',
-    alignItems: 'center',
-    textTransform: 'uppercase',
-  },
-  sliderButton: {
-    color: '#292929',
-    padding: 0,
-  },
 }));
 
 export default function BasicSearchResults({input, results, setResults, detailList, setDetailList}) {
@@ -109,28 +70,28 @@ export default function BasicSearchResults({input, results, setResults, detailLi
 
   return (
     <Container>
-      <Typography className={classes.title} align='left'>Similar Images</Typography>
+      <Typography variant='h2' align='left'>Similar Images</Typography>
       <Grid style={{paddingTop: '3vh'}} container>
         <Grid item xs={3}>
-          <Button className={classes.button} fullWidth={true}>Image view</Button>
+          <Button fullWidth={true}>Image view</Button>
         </Grid>
         <Grid item xs={3}>
-          <Button className={classes.button} fullWidth={true} endIcon={<InfoOutlinedIcon/>}>Areas of likeness</Button>
+          <Button fullWidth={true} endIcon={<InfoOutlinedIcon/>}>Areas of likeness</Button>
         </Grid>
         <Grid item xs={3}>
           <div/>
         </Grid>
         <Grid container item xs={3}>
           <Grid item xs={12}>
-            <Typography className={classes.sliderText}>Image Size</Typography>
+            <Typography style={{fontSize: 12, lineHeight: 1, textTransform: 'uppercase'}}>Image Size</Typography>
           </Grid>
           <Grid item xs={2} align='left'>
             {/* Using IconButton 'disabled' can result in conditions where the images constantly switch
               * between two sizes until the user clicks anywhere in the page, or the page crashes. */}
             {/*disabled={tileSize === 1}*/}
             <IconButton
-              classes={{root: classes.sliderButton}}
               size='small'
+              color='primary'
               onClick={() => setTileSize(tileSize => tileSize > 1 ? tileSize - 1 : tileSize)}>
               <RemoveCircleOutlineOutlinedIcon/>
             </IconButton>
@@ -146,8 +107,8 @@ export default function BasicSearchResults({input, results, setResults, detailLi
           </Grid>
           <Grid item xs={2} align='right'>
             <IconButton
-              classes={{root: classes.sliderButton}}
               size='small'
+              color='primary'
               onClick={() => setTileSize(tileSize => tileSize < 3 ? tileSize + 1 : tileSize)}>
               <AddCircleOutlineOutlinedIcon/>
             </IconButton>

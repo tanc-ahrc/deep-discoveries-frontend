@@ -20,9 +20,6 @@ import BasicSearch from './BasicSearch.js';
 import SearchDatum from './SearchDatum.js';
 
 const useStyles = makeStyles((theme) => ({
-  text: {
-    textAlign: 'center',
-  },
   uploadText: {
     textAlign: 'center',
     color: '#3030EE',
@@ -66,11 +63,11 @@ export default function Start() {
   if(typeof input === typeof undefined) {
     return (
       <DndProvider backend={HTML5Backend}>
-        <Container style={{width:'50vw', height:'80vh'}} justify='center' spacing='1em'>
-          <Typography className={classes.text} style={{fontSize: '1.5em', fontWeight: 500, paddingBottom: '1em'}}>
+        <Container style={{width:'50vw', height:'80vh'}} justify='center'>
+          <Typography variant='h1' align='center'>
             Explore our National Collection
           </Typography>
-          <Typography className={classes.text} style={{color: '#717171', paddingBottom: '1em'}}>
+          <Typography style={{color: '#717171', paddingBottom: '1em'}} align='center'>
             Search with an image to find similar results
           </Typography>
           <InputZone style={{paddingBottom: '1em'}}
@@ -80,9 +77,9 @@ export default function Start() {
             onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
           />
           <DecoratedDivider style={{paddingBottom: '1em'}}>
-            <Typography className={classes.text}>&nbsp;Or&nbsp;</Typography>
+            <Typography>&nbsp;Or&nbsp;</Typography>
           </DecoratedDivider>
-          <Typography className={classes.text} style={{paddingBottom: '1em'}}>
+          <Typography style={{paddingBottom: '1em'}} align='center'>
             Click a sample image to try it
           </Typography>
 
@@ -161,7 +158,7 @@ function InputZone({style, onFileDrop, onURLDrop, onAssetDrop, onFileUpload}) {
     <div ref={drop} style={style}>
       <Card className={classes.inputZone}>
         <CardContent style={{height: '30vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-          <Typography className={classes.text}>
+          <Typography>
             Drag an image here or
             <label className={classes.uploadText}>
               <input style={{display: 'none'}}
