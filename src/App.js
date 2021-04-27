@@ -1,6 +1,13 @@
 import Start from './Start.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+const defaultBlack = '#292929';
+const selectionTextColor = '#FFFFFF';
+const selectionColor = '#1F1F4D';
+const defaultBorder = '2px solid';
+const defaultRadius = '5px';
+const defaultOpacity = 0.8;
+
 const theme = createMuiTheme({
   typography: {
     fontFamily: '"Open Sans", sans-serif',
@@ -24,64 +31,56 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#292929',
+      main: defaultBlack,
     },
     text: {
-      primary: '#292929',
+      primary: defaultBlack,
     },
     action: {
-      hoverOpacity: 0.8,
+      hoverOpacity: defaultOpacity,
     }
   },
   overrides: {
     MuiButton: {
       root: {
-        border: '2px solid',
-        borderColor: '#292929',
-        boxSizing: 'border-box',
-        borderRadius: '5px',
+        border: defaultBorder,
+        borderColor: defaultBlack,
+        borderRadius: defaultRadius,
         textTransform: 'none',
         '&:hover': {
-          backgroundColor: '#1F1F4D',
-          color: '#FFFFFF',
+          backgroundColor: selectionColor,
+          color: selectionTextColor,
         },
       },
     },
     MuiToggleButton: {
       root: {
-        border: '2px solid',
-        borderColor: '#292929',
-        boxSizing: 'border-box',
-        borderRadius: '5px',
+        border: defaultBorder,
+        borderColor: defaultBlack,
+        borderRadius: defaultRadius,
         textTransform: 'none',
-        color: '#292929',
+        color: defaultBlack,
         '&:hover': {
-          backgroundColor: '#1F1F4D',
-          borderColor: '#292929',
-          color: '#FFFFFF',
+          backgroundColor: selectionColor,
+          borderColor: defaultBlack,
+          color: selectionTextColor,
         },
         '&$selected': {
-          backgroundColor: '#1F1F4D',
-          borderColor: '#292929',
-          color: '#FFFFFF',
-          '&:hover': {
-            backgroundColor: '#1F1F4D',
-            borderColor: '#292929',
-            color: '#FFFFFF',
-          },
+          backgroundColor: selectionColor,
+          borderColor: defaultBlack,
+          color: selectionTextColor,
         },
         '&$disabled': {
-          backgroundColor: '#1F1F4D',
-          borderColor: '#292929',
-          color: '#FFFFFF',
+          backgroundColor: selectionColor,
+          borderColor: defaultBlack,
+          color: selectionTextColor,
         },
       },
     },
     MuiSelect: {
       root: {
-        border: '2px solid',
-        boxSizing: 'border-box',
-        borderRadius: '5px',
+        border: defaultBorder,
+        borderRadius: defaultRadius,
       },
     },
   },
