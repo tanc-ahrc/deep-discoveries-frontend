@@ -47,6 +47,36 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiToggleButton: {
+      root: {
+        border: '2px solid',
+        borderColor: '#292929',
+        boxSizing: 'border-box',
+        borderRadius: '5px',
+        textTransform: 'none',
+        color: '#292929',
+        '&:hover': {
+          backgroundColor: '#1F1F4D',
+          borderColor: '#292929',
+          color: '#FFFFFF',
+        },
+        '&$selected': {
+          backgroundColor: '#1F1F4D',
+          borderColor: '#292929',
+          color: '#FFFFFF',
+          '&:hover': {
+            backgroundColor: '#1F1F4D',
+            borderColor: '#292929',
+            color: '#FFFFFF',
+          },
+        },
+        '&$disabled': {
+          backgroundColor: '#1F1F4D',
+          borderColor: '#292929',
+          color: '#FFFFFF',
+        },
+      },
+    },
     MuiSelect: {
       root: {
         border: '2px solid',

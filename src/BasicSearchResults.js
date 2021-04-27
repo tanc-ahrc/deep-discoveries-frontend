@@ -2,6 +2,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import IconButton from '@material-ui/core/IconButton';
 import Slider from '@material-ui/core/Slider';
 import Card from '@material-ui/core/Card';
@@ -34,6 +36,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
   const classes = useStyles();
 
   const [tileSize, setTileSize] = useState(2);
+  const [showLikeness, setShowLikeness] = useState(false);
 
   function getSimilar() {
     const endpoint = 'https://decade.ac.uk/deepdiscovery/api/upload';
@@ -72,11 +75,11 @@ export default function BasicSearchResults({input, results, setResults, detailLi
     <Container>
       <Typography variant='h2' align='left'>Similar Images</Typography>
       <Grid container>
-        <Grid item xs={3}>
-          <Button fullWidth={true}>Image view</Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button fullWidth={true} endIcon={<InfoOutlinedIcon/>}>Areas of likeness</Button>
+        <Grid item xs={6}>
+          <ToggleButtonGroup style={{width: '100%'}} exclusive value={showLikeness} onChange={(e, n)=>{if(n === true || n === false) setShowLikeness(n);}}>
+            <ToggleButton style={{borderRadius: '5px 0   0   5px', width: '50%'}} value={false} disabled={!showLikeness}>Image view</ToggleButton>
+            <ToggleButton style={{borderRadius: '0   5px 5px 0'  , width: '50%'}} value={true}  disabled={ showLikeness}>Likeness view</ToggleButton>
+          </ToggleButtonGroup>
         </Grid>
         <Grid item xs={3}>
           <div/>
@@ -120,7 +123,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
                columnClassName={classes.masonryColumn}
                style={{paddingTop: '3vh'}}>
         {results.map((result) => (
-          <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} tileSize={tileSize}/>
+          <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} showLikeness={showLikeness} tileSize={tileSize}/>
         ))}
       </Masonry>
     </Container>
@@ -143,7 +146,7 @@ function getCollectionInfo(collection) {
   return c;
 }
 
-function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
+function ResultTile({result, detailList, setDetailList, tileSize, showLikeness, ...props}) {
   let isChecked = false;
   for(const detail of detailList) {
     if(result.aid === detail.aid) {
@@ -151,6 +154,14 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
       break;
     }
   }
+
+  // Pointer to a transparent png, for testing this:
+  // result.likeness = 'https://onlinepngtools.com/images/examples-onlinepngtools/clouds-transparent.png';
+  let overlay;
+  if(showLikeness) overlay = (
+    <img style={{height: '100%', width: '100%', padding: 0, margin: 0, position: 'absolute', top: 0, left: 0, zIndex: 2}}
+         src={result.likeness}/>
+  );
 
   return (
     <Card {...props} variant='outlined' style={{borderColor:'#292929', borderRadius: '5px 5px 0 0'}}>
@@ -164,7 +175,10 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
           </Grid>
           <Grid item><Typography style={{paddingRight: '3px'}}>{getCollectionInfo(result.collection).name}</Typography></Grid>
         </Grid>
-        <img style={{height: '100%', width: '100%', padding: 0, margin: 0}} src={result.url}/>
+        <div style={{position: 'relative', top: 0, left: 0}}>
+          <img style={{height: '100%', width: '100%', padding: 0, margin: 0, position: 'relative', top: 0, left: 0, zIndex: 1}} src={result.url}/>
+          {overlay}
+        </div>
       </CardContent>
     </Card>
   );
