@@ -62,7 +62,7 @@ const theme = createMuiTheme({
         textTransform: 'none',
         color: defaultBlack,
         '&:hover': {
-          backgroundColor: selectionColor,
+          backgroundColor: fade(selectionColor, defaultOpacity),
           borderColor: defaultBlack,
           color: selectionTextColor,
         },
