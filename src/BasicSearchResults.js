@@ -153,7 +153,7 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
   }
 
   return (
-    <Card {...props} variant='outlined' style={{borderColor:'black'}}>
+    <Card {...props} variant='outlined' style={{borderColor:'#292929', borderRadius: '5px 5px 0 0'}}>
       <CardContent style={{margin: 0, padding: 0}}>
         <Grid container justify='space-between'>
           <Grid item>
