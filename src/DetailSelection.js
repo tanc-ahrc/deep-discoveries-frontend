@@ -53,7 +53,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
           <Typography variant='h3'>Click an image to highlight areas of interest</Typography>
         </Grid>
         <Grid container>
-          <Grid container xs={2}>
+          <Grid container item xs={2}>
             <Grid item xs={11}>
               <Button fullWidth={true} onClick={cancelDetailSearch}>Update search</Button>
             </Grid>
@@ -110,7 +110,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
         <Grid item xs={12}>
           <Typography variant='h3'>Click and draw over the image to highlight areas of interest.</Typography>
         </Grid>
-        <Grid container xs={2}>
+        <Grid container item xs={2}>
           <Grid item xs={11}>
             <Button fullWidth={true} onClick={()=>{setDetailImage(undefined);}}>Cancel</Button>
             <Button fullWidth={true} onClick={()=>{
