@@ -152,21 +152,9 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
     }
   }
 
-  //Following https://material-ui.com/guides/composition/#caveat-with-inlining
-  //TODO: React docs indicate that there is no semantic guarantee here, is
-  //      material-ui relying on the semantics?
-  //      See https://reactjs.org/docs/hooks-reference.html#usememo
-  const ImagePart = useMemo(
-    () =>
-      forwardRef((p, ref) => (
-        <ScaledImage id={result.aid} src={result.url} tileSize={tileSize}/>
-      )),
-      [result, tileSize]
-  );
-
   return (
     <Card {...props} variant='outlined' style={{borderColor:'black'}}>
-      <CardContent style={{margin: 0, padding: 0, paddingRight: 3}}>
+      <CardContent style={{margin: 0, padding: 0}}>
         <Grid container justify='space-between'>
           <Grid item>
             <Checkbox style={{margin: 0, padding: 0}}
@@ -174,10 +162,10 @@ function ResultTile({result, detailList, setDetailList, tileSize, ...props}) {
                       onChange={() => { setDetailList({type: isChecked ? 'remove' : 'add', payload: result.clone()}); }}
             />
           </Grid>
-          <Grid item><Typography>{getCollectionInfo(result.collection).name}</Typography></Grid>
+          <Grid item><Typography style={{paddingRight: '3px'}}>{getCollectionInfo(result.collection).name}</Typography></Grid>
         </Grid>
+        <img style={{height: '100%', width: '100%', padding: 0, margin: 0}} src={result.url}/>
       </CardContent>
-      <CardMedia component={ImagePart}/>
     </Card>
   );
 }
