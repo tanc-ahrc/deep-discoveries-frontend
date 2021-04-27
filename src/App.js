@@ -1,5 +1,6 @@
 import Start from './Start.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const defaultBlack = '#292929';
 const selectionTextColor = '#FFFFFF';
@@ -81,6 +82,21 @@ const theme = createMuiTheme({
       root: {
         border: defaultBorder,
         borderRadius: defaultRadius,
+      },
+    },
+    MuiCheckbox: {
+      colorSecondary: {
+        '&$checked': {
+          color: selectionColor,
+        },
+        '&:hover': {
+          backgroundColor: fade(selectionColor, defaultOpacity),
+        },
+      },
+    },
+    MuiSlider: {
+      root: {
+        color: selectionColor,
       },
     },
   },
