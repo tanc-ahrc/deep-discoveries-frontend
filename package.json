@@ -2,7 +2,7 @@
   "name": "deep-discoveries-frontend",
   "license": "MIT",
   "version": "0.1.0",
-  "homepage": "http://tanc-ahrc.github.io/deep-discoveries-frontend",
+  "homepage": "https://tanc-ahrc.github.io/deep-discoveries-frontend",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
