@@ -1,6 +1,18 @@
 import Start from './Start.js';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
+import { useState } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const defaultBlack = '#292929';
 const selectionTextColor = '#FFFFFF';
@@ -106,11 +118,41 @@ const theme = createMuiTheme({
 // for all screens, so its spacing-out
 // styling applies to all screens.
 export default function App() {
+  const [menuLocation, setMenuLocation] = useState(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
+
   return (
-    <ThemeProvider theme={theme}>
-      <div style={{paddingTop: '5vh'}}>
-        <Start/>
-      </div>
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={theme}>
+        <AppBar style={{backgroundColor: '#3f51b5'}} position="static">
+          <Toolbar>
+            <IconButton edge="end" onClick={(e)=>{setMenuLocation(e.currentTarget);}}>
+              <MenuIcon/>
+            </IconButton>
+              <Menu
+                anchorEl={menuLocation}
+                open={Boolean(menuLocation)}
+              >
+                <MenuList onMouseLeave={()=>{setMenuLocation(null);}}>
+                  <MenuItem><a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">Source (GitHub)</a></MenuItem>
+                  <MenuItem onClick={()=>{setAboutOpen(true);}}>About</MenuItem>
+                </MenuList>
+              </Menu>
+          </Toolbar>
+        </AppBar>
+        <Dialog open={aboutOpen} onClose={()=>{setAboutOpen(false);}}>
+          <DialogTitle>About</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Designed by ...</DialogContentText>
+            <DialogContentText>Copyright &copy; 2021 Crown Copyright (The National Archives) except where otherwise stated in the source.</DialogContentText>
+            <DialogContentText>Licensed under the MIT License.</DialogContentText>
+            <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source</a> for details.</DialogContentText>
+          </DialogContent>
+        </Dialog>
+        <div style={{paddingTop: '5vh'}}>
+          <Start/>
+        </div>
+      </ThemeProvider>
+    </div>
   );
 }
