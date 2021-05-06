@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/deep-discoveries-frontend/static/js/main.e712f632.chunk.js",
-    "main.js.map": "/deep-discoveries-frontend/static/js/main.e712f632.chunk.js.map",
+    "main.js": "/deep-discoveries-frontend/static/js/main.2f985a5b.chunk.js",
+    "main.js.map": "/deep-discoveries-frontend/static/js/main.2f985a5b.chunk.js.map",
     "runtime-main.js": "/deep-discoveries-frontend/static/js/runtime-main.fbf506bb.js",
     "runtime-main.js.map": "/deep-discoveries-frontend/static/js/runtime-main.fbf506bb.js.map",
     "static/js/2.a34c5650.chunk.js": "/deep-discoveries-frontend/static/js/2.a34c5650.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.fbf506bb.js",
     "static/js/2.a34c5650.chunk.js",
-    "static/js/main.e712f632.chunk.js"
+    "static/js/main.2f985a5b.chunk.js"
   ]
 }
