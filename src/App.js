@@ -124,7 +124,7 @@ export default function App() {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <AppBar style={{backgroundColor: '#3f51b5'}} position="static">
+        <AppBar style={{backgroundColor: '#3f51b5'}} position="fixed">
           <Toolbar>
             <IconButton edge="end" onClick={(e)=>{setMenuLocation(e.currentTarget);}}>
               <MenuIcon/>
@@ -149,7 +149,7 @@ export default function App() {
             <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source</a> for details.</DialogContentText>
           </DialogContent>
         </Dialog>
-        <div style={{paddingTop: '5vh'}}>
+        <div style={{position: 'relative', top: '10vh'}}>
           <Start/>
         </div>
       </ThemeProvider>
