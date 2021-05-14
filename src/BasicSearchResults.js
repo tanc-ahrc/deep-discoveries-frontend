@@ -14,6 +14,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
 import SearchDatum from './SearchDatum.js';
+import { send } from './Backend.js';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -35,18 +36,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
   const [showLikeness, setShowLikeness] = useState(false);
 
   function getSimilar() {
-    const endpoint = 'https://decade.ac.uk/deepdiscovery/api/upload';
-    const formData = new FormData();
-    if     (input.file) formData.append('query_file', input.file);
-    else if(input.aid)  formData.append('query_aid',  input.aid);
-    else                formData.append('query_url',  input.url);
-    formData.append('searchengine', 'Style');
-    formData.append('resultcount', 111);
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', endpoint, true);
-    xhr.onload = function() {
-      let initialResults = JSON.parse(this.responseText);
-
+    send(input, 111, (initialResults) => {
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
       if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
@@ -61,8 +51,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
         y.collection = x.collection;
         return y;
       })});
-    };
-    xhr.send(formData);
+    });
   }
 
   useEffect(getSimilar, [input, setResults]);
