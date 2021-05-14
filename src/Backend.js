@@ -11,8 +11,27 @@ export function send(input, resultCount, callback) {
   const xhr = new XMLHttpRequest();
   xhr.open('POST', endpoint, true);
   xhr.onload = function() {
-    callback(JSON.parse(this.responseText));
+    let initialResults = JSON.parse(this.responseText);
+    initialResults = initialResults.filter((r) => {
+      return r.collection != null && getCollectionInfo(r.collection).name != null;
+    });
+    callback(initialResults);
   };
   xhr.send(formData);
 }
 
+export function getCollectionInfo(collection) {
+  if(collection == null) return null; /* matches on undefined or null */
+
+  let c = { id: collection };
+
+  if     (collection === "RGBE")   c.name = "Royal Botanic Garden Edinburgh";
+  else if(collection === "TNA1" ||
+          collection === "TNA2" ||
+          collection === "TNA3")   c.name = "The National Archives";
+  else if(collection === "VA1" ||
+          collection === "VA2")    c.name = "Victoria & Albert Museum";
+  else                             c.name = null;
+
+  return c;
+}

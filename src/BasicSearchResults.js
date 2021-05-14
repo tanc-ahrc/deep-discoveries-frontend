@@ -14,7 +14,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
 import SearchDatum from './SearchDatum.js';
-import { send } from './Backend.js';
+import { send, getCollectionInfo } from './Backend.js';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -40,11 +40,6 @@ export default function BasicSearchResults({input, results, setResults, detailLi
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
       if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
-
-      //Only display images from named collections
-      initialResults = initialResults.filter((r) => {
-        return r.collection != null && getCollectionInfo(r.collection).name != null;
-      });
 
       setResults({type: 'replace', payload: initialResults.map((x) => {
         const y = new SearchDatum(x.aid, x.url);
@@ -113,22 +108,6 @@ export default function BasicSearchResults({input, results, setResults, detailLi
       </Masonry>
     </Container>
   );
-}
-
-function getCollectionInfo(collection) {
-  if(collection == null) return null; /* matches on undefined or null */
-
-  let c = { id: collection };
-
-  if     (collection === "RGBE")   c.name = "Royal Botanic Garden Edinburgh";
-  else if(collection === "TNA1" ||
-          collection === "TNA2" ||
-          collection === "TNA3")   c.name = "The National Archives";
-  else if(collection === "VA1" ||
-          collection === "VA2")    c.name = "Victoria & Albert Museum";
-  else                             c.name = null;
-
-  return c;
 }
 
 function ResultTile({result, detailList, setDetailList, tileSize, showLikeness, ...props}) {
