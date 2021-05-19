@@ -44,6 +44,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
       setResults({type: 'replace', payload: initialResults.map((x) => {
         const y = new SearchDatum(x.aid, x.url);
         y.collection = x.collection;
+        y.heatmapurl = x.heatmapurl;
         return y;
       })});
     });
@@ -124,7 +125,7 @@ function ResultTile({result, detailList, setDetailList, tileSize, showLikeness, 
   let overlay;
   if(showLikeness) overlay = (
     <img style={{height: '100%', width: '100%', padding: 0, margin: 0, position: 'absolute', top: 0, left: 0, zIndex: 2}}
-         src={result.likeness}/>
+         src={result.heatmapurl}/>
   );
 
   return (
