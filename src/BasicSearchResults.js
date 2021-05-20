@@ -35,8 +35,74 @@ export default function BasicSearchResults({input, results, setResults, detailLi
   const [tileSize, setTileSize] = useState(2);
   const [showLikeness, setShowLikeness] = useState(false);
 
+  function getSelections(circle, map) {
+    const scale = circle.fillPatternScaleX();
+    if(scale !== circle.fillPatternScaleY()) {
+      console.error('Inconsistent scale');
+      //This is a Bad Thing as it means that the radius warps differently
+      //in each dimension, which'll make computing the selected pixels more
+      //tricky. We maintain aspect ratio when we scale images, so
+      //it should not happen. (And in an ideal world, we'd generate a png of
+      //the selections, so we would not need to do any of this calculation
+      //at all.)
+    }
+    const center_x = circle.x() / scale;
+    const center_y = circle.y() / scale;
+    const radius = circle.radius() / scale;
+//console.log('first', scale, center_x, center_y, radius);
+    //following https://stackoverflow.com/a/14487680
+    const rect_top =    Math.max(Math.round(center_y - radius), 0);
+    const rect_bottom = Math.min(Math.round(center_y + radius), map[0].length - 1);
+    const rect_left =   Math.max(Math.round(center_x - radius), 0);
+    const rect_right =  Math.min(Math.round(center_x + radius), map.length - 1);
+    const sq_radius =   Math.round(radius * radius);
+//console.log('second', rect_left, rect_top, rect_right, rect_bottom);
+    for(let x = rect_left; x <= rect_right; x++) {
+      for(let y = rect_top; y <= rect_bottom; y++) {
+        let sq_x = (x - center_x); sq_x = sq_x * sq_x;
+        let sq_y = (y - center_y); sq_y = sq_y * sq_y;
+        if(sq_x + sq_y < sq_radius) {
+//console.log(Math.round(x), Math.round(y));
+          map[x][y] = 1;
+        }
+      }
+    }
+  }
+
   function getSimilar() {
-    send(input, 33, (initialResults) => {
+    console.log('sending details');
+    let selection_encodings = [];
+const t1 = performance.now();
+    for(const detail of [input].concat(detailList)) {
+//console.log(detail.aid);
+//console.log(detail.url);
+//console.log(detail);
+//TODO: may be able to pull this out of the circle itself (it has an img attribute)
+      const image = new Image();
+      image.src = detail.url;
+      let selection_encoding = '' + detail.aid + '*' + detail.url + '*' + image.naturalWidth + '*' + image.naturalHeight + '*';
+      const map = new Array(image.naturalWidth);
+      map.fill(new Array(image.naturalHeight));
+      for(const column of map) column.fill(0);
+//console.log(map);
+      for(const circleArray of detail.selections.stack[detail.selections.current]) {
+const t2 = performance.now();
+        for(const circle of circleArray) {
+//console.log(circle);
+          getSelections(circle, map);
+        }
+const t3 = performance.now();
+console.log('one circle took', t3 - t2);
+      }
+      for(const column of map) {
+        selection_encoding += column.join('');
+      }
+      selection_encodings.push(selection_encoding);
+    }
+const t4 = performance.now();
+console.log('all circles took', t4 - t1);
+console.log('encodings', selection_encodings);
+    send(input, 3, (initialResults) => {
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
       if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
@@ -50,7 +116,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
     });
   }
 
-  useEffect(getSimilar, [input, setResults]);
+  useEffect(getSimilar, [input, setResults, detailList]);
 
   return (
     <Container>

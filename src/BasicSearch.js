@@ -19,6 +19,7 @@ export default function BasicSearch({input, setInput}) {
   const [detailList, setDetailList] = useReducer(
     (oldDetailList, action) => {
       const newDetail = action.payload;
+console.log(newDetail);
       switch(action.type) {
         case 'add': {
           return oldDetailList.concat(newDetail);
@@ -46,6 +47,7 @@ export default function BasicSearch({input, setInput}) {
     []
   );
   const [detailSearch, setDetailSearch] = useState(false);
+console.log('detailList:', detailList);
   if(detailSearch) {
     return (
       <DetailSelection input={input}

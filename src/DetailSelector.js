@@ -25,6 +25,7 @@ export default function DetailSelector({src, shadingColor, shadingOpacity, selec
     let widthScale = width / image.naturalWidth;
     let heightScale = height / image.naturalHeight;
     const scale = widthScale < heightScale ? widthScale : heightScale;
+console.log('scale', scale);
 
     // Base selector size on the smaller factor. Magic constant arrived at by trial and error.
     const selectorSize = widthScale < heightScale ? image.naturalWidth  * scale * 0.025 * 0.5
