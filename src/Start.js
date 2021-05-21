@@ -14,11 +14,12 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useDrop, useDrag, DndProvider } from 'react-dnd';
 import { NativeTypes, HTML5Backend } from 'react-dnd-html5-backend';
+import ReactTooltip from 'react-tooltip';
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BasicSearch from './BasicSearch.js';
 import SearchDatum from './SearchDatum.js';
-import {randomImages} from './Backend.js';
+import {randomImages, getCollectionInfo} from './Backend.js';
 
 const useStyles = makeStyles((theme) => ({
   uploadText: {
@@ -48,6 +49,9 @@ export default function Start() {
   const classes = useStyles();
 
   const [input, setInput] = useState();
+  const images = randomImages(8);
+  for(let i = 0; i < 4; i++) images[i].tooltip_pos = 'top';
+  for(let i = 4; i < 8; i++) images[i].tooltip_pos = 'bottom'
 
   //For onFileDrop and onFileUpload in the InputZone, below
   async function updateFileInput(file) {
@@ -64,6 +68,7 @@ export default function Start() {
   if(typeof input === typeof undefined) {
     return (
       <DndProvider backend={HTML5Backend}>
+        <ReactTooltip/>
         <Container style={{width: '50vw'}} justify='center'>
           <Typography variant='h1' align='center'>
             Explore our National Collection
@@ -88,9 +93,10 @@ export default function Start() {
                    This could surely be better, but it is plenty enough for a prototype. */}
           <GridList cols={4} style={{justifyContent: 'center'}} spacing={document.documentElement.clientWidth * 0.01}>
           {
-            randomImages(8).map(
+            images.map(
               (asset) => (
-                <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}>
+                <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}
+                              data-tip={getCollectionInfo(asset.collection).name} data-effect='solid' data-place={asset.tooltip_pos}>
                   <ImageTile
                     className={classes.tile}
                     asset={asset}
