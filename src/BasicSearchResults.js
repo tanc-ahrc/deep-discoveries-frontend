@@ -36,7 +36,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
   const [showLikeness, setShowLikeness] = useState(false);
 
   function getSimilar() {
-    send(input, 33, (initialResults) => {
+    send(input, 33, [input].concat(detailList), (initialResults) => {
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
       if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
@@ -50,7 +50,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
     });
   }
 
-  useEffect(getSimilar, [input, setResults]);
+  useEffect(getSimilar, [input, setResults, detailList]);
 
   return (
     <Container>
