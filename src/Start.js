@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BasicSearch from './BasicSearch.js';
 import SearchDatum from './SearchDatum.js';
+import {randomImages} from './Backend.js';
 
 const useStyles = makeStyles((theme) => ({
   uploadText: {
@@ -87,7 +88,7 @@ export default function Start() {
                    This could surely be better, but it is plenty enough for a prototype. */}
           <GridList cols={4} style={{justifyContent: 'center'}} spacing={document.documentElement.clientWidth * 0.01}>
           {
-            randomImages().map(
+            randomImages(8).map(
               (asset) => (
                 <GridListTile key={asset.aid} style={{height: '11vw', width: '11vw'}}>
                   <ImageTile
@@ -184,18 +185,4 @@ function DecoratedDivider({style, children}) {
       <div style={{border: '1px solid #E9E9E9', width: '50%'}}/>
     </div>
   );
-}
-
-// TODO: Stub pending random image API call
-function randomImages() {
-  return [
-    {aid:  4723, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/4723.jpg'},
-    {aid: 13800, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13800.jpg'},
-    {aid: 14105, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14105.jpg'},
-    {aid:  2034, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA3/2034.jpg'},
-    {aid: 13365, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13365.jpg'},
-    {aid: 13549, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/13549.jpg'},
-    {aid:  3985, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA2/3985.jpg'},
-    {aid: 14769, url: 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/TNA1/14769.jpg'},
-  ];
 }

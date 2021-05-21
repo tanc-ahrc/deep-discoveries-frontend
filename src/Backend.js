@@ -1,16 +1,18 @@
 const endpoint = 'https://decade.ac.uk/deepdiscovery/api/upload';
 
-export function send(input, resultCount, details, callback) {
+export function send(input, resultCount, details, callback, engine = 'Style', synchronous = false) {
   const formData = new FormData();
-  if     (input.file) formData.append('query_file', input.file);
-  else if(input.aid)  formData.append('query_aid',  input.aid);
-  else                formData.append('query_url',  input.url);
-  formData.append('searchengine', 'Style');
+  if(input) {
+    if     (input.file) formData.append('query_file', input.file);
+    else if(input.aid)  formData.append('query_aid',  input.aid);
+    else                formData.append('query_url',  input.url);
+  }
+  formData.append('searchengine', engine);
   formData.append('resultcount', resultCount);
   if(details) formData.append('weights', getWeights(details));
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', endpoint, true);
+  xhr.open('POST', endpoint, !synchronous);
   xhr.onload = function() {
     let initialResults = JSON.parse(this.responseText);
     initialResults = initialResults.filter((r) => {
@@ -19,6 +21,14 @@ export function send(input, resultCount, details, callback) {
     callback(initialResults);
   };
   xhr.send(formData);
+}
+
+export function randomImages(count) {
+  let result;
+  send(null, count, null, (response) => {
+    result = response;
+  }, 'Random', true);
+  return result;
 }
 
 export function getCollectionInfo(collection) {
