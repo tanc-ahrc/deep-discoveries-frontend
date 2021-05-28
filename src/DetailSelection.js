@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 export default function DetailSelection({input, setInput, detailList, setDetailList, cancelDetailSearch}) {
   const classes = useStyles();
 
-  const [detailImage, setDetailImage] = useState();
-  const [selections, setSelections] = useState();
+  const [detailImage, setDetailImage] = useState(input)
+  const [selections, setSelections] = useState(input.cloneSelections());
 
   const shadingColor='black'
   const shadingOpacity=0.5
@@ -67,46 +67,8 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
 
   const allImages = [{datum: input, deleteFunc: deleteInput}].concat(detailList.map((d) => { return { datum: d, deleteFunc: deleteDetailItem};}));
 
-  if(typeof detailImage === typeof undefined) {
-    return (
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant='h3'>Click an image to highlight areas of interest</Typography>
-        </Grid>
-        <Grid container>
-          <Grid container item xs={4}>
-            <Grid item xs={12}>
-              <Button fullWidth={true} onClick={cancelDetailSearch}>Back to results</Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Masonry
-                breakpointCols={2}
-                className={classes.masonry}
-                columnClassName={classes.masonryColumn}
-              >
-                {allImages.map((image) => (
-                  <div className={classes.masonryCell} key={image.datum.aid}>
-                    <ScaledImage id={image.datum.aid}
-                                 src={image.datum.url}
-                                 shadingColor={shadingColor}
-                                 shadingOpacity={shadingOpacity}
-                                 selections={image.datum.selections.stack[image.datum.selections.current]}
-                                 onClick={()=>{setSelections(image.datum.cloneSelections()); setDetailImage(image.datum);}}
-                    />
-                    <CancelIcon
-                      style={{position: 'absolute', top: 0, right: 0}}
-                      onClick={ () => { image.deleteFunc(image.datum) }}
-                    />
-                  </div>
-                ))}
-              </Masonry>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-  else {
+  let selector;
+  if(typeof detailImage !== typeof undefined) {
     function selectionsChomp() {
       return {
         stack: selections.stack.slice(0, selections.current + 1),
@@ -133,20 +95,26 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
       return true;
     }
 
-    return (
-      <Grid container>
+    selector = (
+      <>
         <Grid item xs={12}>
           <Typography variant='h3'>Click and draw over the image to highlight areas of interest.</Typography>
         </Grid>
+        <Grid item xs={10}>
+          <DetailSelector src={detailImage.url}
+                          shadingColor={shadingColor}
+                          shadingOpacity={shadingOpacity}
+                          selections={selections.stack[selections.current]}
+                          setSelections={pushSelection}/>
+        </Grid>
         <Grid container item xs={2}>
           <Grid item xs={11}>
-            <Button fullWidth={true} onClick={()=>{setDetailImage(undefined);}}>Cancel</Button>
             <Button fullWidth={true} onClick={()=>{
                       const d = detailImage.clone();
                       d.selections = selectionsChomp();
                       if(d.aid === input.aid) { setInput(d); }
                       else { setDetailList({type: 'update', payload: d}); }
-                      setDetailImage(undefined);
+                      setDetailImage(undefined); /* Workaround: without this, we fill new selections in one image with the background image from the next image. TODO: fix said bug.*/
                     }}
                     disabled={selectionsMatch()}
             >Update selections</Button>
@@ -156,14 +124,45 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
             <Button fullWidth={true} disabled={selections.current === 0} onClick={clear}>Clear</Button>
           </Grid>
         </Grid>
-        <Grid item xs={10}>
-          <DetailSelector src={detailImage.url}
-                          shadingColor={shadingColor}
-                          shadingOpacity={shadingOpacity}
-                          selections={selections.stack[selections.current]}
-                          setSelections={pushSelection}/>
-        </Grid>
-      </Grid>
+      </>
     );
   }
+
+  return (
+    <Grid container>
+      <Grid container>
+        <Grid container item xs={4}>
+          <Grid item xs={12}>
+            <Button onClick={cancelDetailSearch}>Back to results</Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Masonry
+              breakpointCols={2}
+              className={classes.masonry}
+              columnClassName={classes.masonryColumn}
+            >
+              {allImages.map((image) => (
+                <div className={classes.masonryCell} key={image.datum.aid}>
+                  <ScaledImage id={image.datum.aid}
+                               src={image.datum.url}
+                               shadingColor={shadingColor}
+                               shadingOpacity={shadingOpacity}
+                               selections={image.datum.selections.stack[image.datum.selections.current]}
+                               onClick={()=>{setSelections(image.datum.cloneSelections()); setDetailImage(image.datum);}}
+                  />
+                  <CancelIcon
+                    style={{position: 'absolute', top: 0, right: 0}}
+                    onClick={ () => { image.deleteFunc(image.datum) }}
+                  />
+                </div>
+              ))}
+            </Masonry>
+          </Grid>
+        </Grid>
+        <Grid container item xs={8} align='right'>
+          {selector}
+        </Grid>
+      </Grid>
+    </Grid>
+  );
 }

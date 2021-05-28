@@ -13,7 +13,7 @@ import 'konva/lib/shapes/Image';
 import 'konva/lib/shapes/Rect';
 import 'konva/lib/shapes/Circle';
 
-export default function DetailSelector({src, shadingColor, shadingOpacity, selections, setSelections}) {
+export default function DetailSelector({src, shadingColor, shadingOpacity, selections, setSelections, ...props}) {
   const containerId = 'imageviewer_component';
   const [image] = useState(new Image());
   image.src = src;
@@ -169,10 +169,9 @@ export default function DetailSelector({src, shadingColor, shadingOpacity, selec
     [image, width, height]
   );
 
-  /* TODO: The sizing should be handled at the DetailSelector component and passed down. */
   return (
-    <div width='100%'>
-      <div style={{overflow: 'hidden', height: '70vh', width: '70vw'}} id={containerId} />
+    <div>
+      <div id={containerId} {...props}/>
     </div>
   );
 }
