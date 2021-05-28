@@ -88,6 +88,18 @@ export default function DetailSelector({src, shadingColor, shadingOpacity, selec
 
     selections.forEach((selection) => {
       selection.forEach((hole) => {
+        const holeScale = hole.fillPatternScaleX();
+        if(holeScale !== hole.fillPatternScaleY()) console.error('Inconsistent scale');
+
+        const scaledX = Math.max(Math.min(scale * (hole.x() / holeScale), image.width * scale - 1), 0);
+        const scaledY = Math.max(Math.min(scale * (hole.y() / holeScale), image.height * scale - 1), 0);
+        const scaledRadius = Math.max(scale * hole.radius() / holeScale, 1);
+        hole.x(scaledX);
+        hole.y(scaledY);
+        hole.radius(scaledRadius);
+        hole.fillPatternOffset({ x: scaledX, y: scaledY });
+        hole.fillPatternScale({ x: scale, y: scale});
+
         layer.add(hole);
       });
     });
