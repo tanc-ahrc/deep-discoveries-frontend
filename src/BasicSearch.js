@@ -82,7 +82,7 @@ export default function BasicSearch({input, setInput, update}) {
     return (
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <BasicSearchSidebar input={input} onNewSearch={() => {getSimilar()}} onDetailSearch={() => {setDetailSearch(true)}}/>
+          <BasicSearchSidebar input={input} detailList={detailList} onNewSearch={() => {getSimilar()}} onDetailSearch={() => {setDetailSearch(true)}}/>
         </Grid>
         <Grid item xs={9}>
           <BasicSearchResults input={input} results={results} setResults={setResults} detailList={detailList} setDetailList={setDetailList}/>

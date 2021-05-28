@@ -4,11 +4,16 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FbImageLibrary from 'react-fb-image-grid';
 
-export default function BasicSearchSidebar({input, onNewSearch, onDetailSearch}) {
+export default function BasicSearchSidebar({input, detailList, onNewSearch, onDetailSearch}) {
   return (
     <Container>
-      <img src={input.url} width='100%'/>
+      <FbImageLibrary
+        images={[input.url].concat(detailList.map(d => d.url))}
+        hideOverlay={true}
+        countFrom={4}
+      />
       <Grid container style={{paddingTop: '3vh'}} spacing={2}>
         <Grid item xs={6}>
           <Button fullWidth={true} onClick={onNewSearch}>Update search</Button>
