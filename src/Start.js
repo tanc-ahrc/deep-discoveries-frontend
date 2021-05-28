@@ -79,7 +79,7 @@ export default function Start() {
           <InputZone style={{paddingBottom: '1rem'}}
             onFileDrop   = { (f) => updateFileInput(f) }
             onURLDrop    = { (u) => setInput(new SearchDatum(0, u)) }
-            onAssetDrop  = { (a) => setInput(a) }
+            onAssetDrop  = { (a) => setInput(new SearchDatum(a.aid, a.url)) }
             onFileUpload = { (e) => updateFileInput(e.target.files[0]) }
           />
           <DecoratedDivider style={{paddingBottom: '1rem'}}>
