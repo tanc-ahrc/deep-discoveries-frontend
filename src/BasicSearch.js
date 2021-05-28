@@ -54,7 +54,7 @@ export default function BasicSearch({input, setInput}) {
                        setResults={setResults}
                        detailList={detailList}
                        setDetailList={setDetailList}
-                       cancelDetailSearch={() => {setDetailSearch(false)}}
+                       cancelDetailSearch={() => {setDetailSearch(false);}}
       />
     )
   }
