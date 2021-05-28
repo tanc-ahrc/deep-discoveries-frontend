@@ -3,8 +3,25 @@ import { useState, useReducer } from 'react';
 import DetailSelection from './DetailSelection.js';
 import BasicSearchSidebar from './BasicSearchSidebar.js';
 import BasicSearchResults from './BasicSearchResults.js';
+import SearchDatum from './SearchDatum.js';
+import { send } from './Backend.js';
 
-export default function BasicSearch({input, setInput}) {
+export default function BasicSearch({input, setInput, update}) {
+  function getSimilar() {
+    send(input, 33, [input].concat(detailList), (initialResults) => {
+      //If the input was an asset, do not display it in the results
+      //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
+      if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
+
+      setResults({type: 'replace', payload: initialResults.map((x) => {
+        const y = new SearchDatum(x.aid, x.url);
+        y.collection = x.collection;
+        y.heatmapurl = x.heatmapurl;
+        return y;
+      })});
+    });
+  }
+
   const [results, setResults] = useReducer(
     (oldResults, action) => {
       const newResult = action.payload;
@@ -46,6 +63,9 @@ export default function BasicSearch({input, setInput}) {
     []
   );
   const [detailSearch, setDetailSearch] = useState(false);
+
+  if(results.length === 0) getSimilar();
+
   if(detailSearch) {
     return (
       <DetailSelection input={input}
@@ -62,7 +82,7 @@ export default function BasicSearch({input, setInput}) {
     return (
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <BasicSearchSidebar input={input} onNewSearch={() => {setInput(undefined);}} onDetailSearch={() => {setDetailSearch(true)}}/>
+          <BasicSearchSidebar input={input} onNewSearch={() => {getSimilar()}} onDetailSearch={() => {setDetailSearch(true)}}/>
         </Grid>
         <Grid item xs={9}>
           <BasicSearchResults input={input} results={results} setResults={setResults} detailList={detailList} setDetailList={setDetailList}/>

@@ -56,7 +56,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
         <Grid container>
           <Grid container item xs={2}>
             <Grid item xs={11}>
-              <Button fullWidth={true} onClick={cancelDetailSearch}>Update search</Button>
+              <Button fullWidth={true} onClick={cancelDetailSearch}>Return to search results</Button>
             </Grid>
           </Grid>
           <Grid item xs={10}>

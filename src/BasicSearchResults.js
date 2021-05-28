@@ -9,12 +9,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@material-ui/icons/RemoveCircleOutlineOutlined';
 import Masonry from 'react-masonry-css';
-import SearchDatum from './SearchDatum.js';
-import { send, getCollectionInfo } from './Backend.js';
+import { getCollectionInfo } from './Backend.js';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -34,23 +33,6 @@ export default function BasicSearchResults({input, results, setResults, detailLi
 
   const [tileSize, setTileSize] = useState(2);
   const [showLikeness, setShowLikeness] = useState(false);
-
-  function getSimilar() {
-    send(input, 33, [input].concat(detailList), (initialResults) => {
-      //If the input was an asset, do not display it in the results
-      //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
-      if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
-
-      setResults({type: 'replace', payload: initialResults.map((x) => {
-        const y = new SearchDatum(x.aid, x.url);
-        y.collection = x.collection;
-        y.heatmapurl = x.heatmapurl;
-        return y;
-      })});
-    });
-  }
-
-  useEffect(getSimilar, [input, setResults, detailList]);
 
   return (
     <Container>

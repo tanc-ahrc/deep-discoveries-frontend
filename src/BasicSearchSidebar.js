@@ -11,7 +11,7 @@ export default function BasicSearchSidebar({input, onNewSearch, onDetailSearch})
       <img src={input.url} width='100%'/>
       <Grid container style={{paddingTop: '3vh'}} spacing={2}>
         <Grid item xs={6}>
-          <Button fullWidth={true} onClick={onNewSearch}>New search</Button>
+          <Button fullWidth={true} onClick={onNewSearch}>Update search</Button>
         </Grid>
         <Grid item xs={6} align='right'>
           <Button fullWidth={true} onClick={onDetailSearch}>Edit search</Button>
