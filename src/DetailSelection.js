@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10px',
   },
   masonryCell: {
-    marginBottom: '10px',
+    marginTop: '10px',
     position: 'relative',
     '&:hover': {
       cursor: 'pointer',
@@ -50,6 +50,23 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
   function redo() { setSelections({stack: selections.stack, current: selections.current + 1}); }
   function clear(){ setSelections({stack: [[]], current: 0}); }
 
+  //Item is a dummy parameter. Both funcs must have the same signature
+  //See CancelIcon's onClick, where they are used.
+  function deleteInput(item) {
+    if(detailList.length !== 0) {
+      const d = detailList[0];
+      setDetailList({type: 'remove', payload: d});
+      setInput(d);
+    }
+    else setInput(undefined);
+  }
+
+  function deleteDetailItem(item) {
+    setDetailList({type: 'remove', payload: item});
+  }
+
+  const allImages = [{datum: input, deleteFunc: deleteInput}].concat(detailList.map((d) => { return { datum: d, deleteFunc: deleteDetailItem};}));
+
   if(typeof detailImage === typeof undefined) {
     return (
       <Grid container>
@@ -57,53 +74,33 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
           <Typography variant='h3'>Click an image to highlight areas of interest</Typography>
         </Grid>
         <Grid container>
-          <Grid container item xs={2}>
-            <Grid item xs={11}>
-              <Button fullWidth={true} onClick={cancelDetailSearch}>Return to search results</Button>
+          <Grid container item xs={4}>
+            <Grid item xs={12}>
+              <Button fullWidth={true} onClick={cancelDetailSearch}>Back to results</Button>
             </Grid>
-          </Grid>
-          <Grid item xs={10}>
-            <Masonry
-              breakpointCols={3}
-              className={classes.masonry}
-              columnClassName={classes.masonryColumn}
-            >
-              <div className={classes.masonryCell} key={input.aid}>
-                <ScaledImage id={input.aid}
-                             src={input.url}
-                             shadingColor={shadingColor}
-                             shadingOpacity={shadingOpacity}
-                             selections={input.selections.stack[input.selections.current]}
-                             onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
-                />
-                <CancelIcon
-                  style={{position: 'absolute', top: 0, right: 0}}
-                  onClick={ () => {
-                    if(detailList.length !== 0) {
-                      const d = detailList[0];
-                      setDetailList({type: 'remove', payload: d});
-                      setInput(d);
-                    }
-                    else setInput(undefined);
-                  }}
-                />
-              </div>
-              {detailList.map((d) => (
-                <div className={classes.masonryCell} key={d.aid}>
-                  <ScaledImage id={d.aid}
-                               src={d.url}
-                               shadingColor={shadingColor}
-                               shadingOpacity={shadingOpacity}
-                               selections={d.selections.stack[d.selections.current]}
-                               onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d);}}
-                  />
-                  <CancelIcon
-                    style={{position: 'absolute', top: 0, right: 0}}
-                    onClick={ ()=>{setDetailList({type: 'remove', payload: d});} }
-                  />
-                </div>
-              ))}
-            </Masonry>
+            <Grid item xs={12}>
+              <Masonry
+                breakpointCols={2}
+                className={classes.masonry}
+                columnClassName={classes.masonryColumn}
+              >
+                {allImages.map((image) => (
+                  <div className={classes.masonryCell} key={image.datum.aid}>
+                    <ScaledImage id={image.datum.aid}
+                                 src={image.datum.url}
+                                 shadingColor={shadingColor}
+                                 shadingOpacity={shadingOpacity}
+                                 selections={image.datum.selections.stack[image.datum.selections.current]}
+                                 onClick={()=>{setSelections(image.datum.cloneSelections()); setDetailImage(image.datum);}}
+                    />
+                    <CancelIcon
+                      style={{position: 'absolute', top: 0, right: 0}}
+                      onClick={ () => { image.deleteFunc(image.datum) }}
+                    />
+                  </div>
+                ))}
+              </Masonry>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
