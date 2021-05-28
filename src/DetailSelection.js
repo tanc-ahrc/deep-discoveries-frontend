@@ -37,6 +37,9 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
   const [detailImage, setDetailImage] = useState();
   const [selections, setSelections] = useState();
 
+  const shadingColor='black'
+  const shadingOpacity=0.5
+
   function pushSelection(newSelection) {
     const newCurrent = selections.current + 1;
     const newStack = selections.stack.slice(0, newCurrent);
@@ -68,6 +71,9 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
               <div className={classes.masonryCell} key={input.aid}>
                 <ScaledImage id={input.aid}
                              src={input.url}
+                             shadingColor={shadingColor}
+                             shadingOpacity={shadingOpacity}
+                             selections={input.selections.stack[input.selections.current]}
                              onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
                 />
                 <CancelIcon
@@ -86,6 +92,9 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
                 <div className={classes.masonryCell} key={d.aid}>
                   <ScaledImage id={d.aid}
                                src={d.url}
+                               shadingColor={shadingColor}
+                               shadingOpacity={shadingOpacity}
+                               selections={d.selections.stack[d.selections.current]}
                                onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d);}}
                   />
                   <CancelIcon
@@ -152,8 +161,8 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
         </Grid>
         <Grid item xs={10}>
           <DetailSelector src={detailImage.url}
-                          shadingColor='black'
-                          shadingOpacity={0.5}
+                          shadingColor={shadingColor}
+                          shadingOpacity={shadingOpacity}
                           selections={selections.stack[selections.current]}
                           setSelections={pushSelection}/>
         </Grid>

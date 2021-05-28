@@ -9,7 +9,7 @@ import 'konva/lib/shapes/Image';
  * All changes copyright (c) 2021 Crown Copyright (The National Archives), MIT license
  * For MIT license, see https://github.com/tanc-ahrc/deep-discoveries-interface-building-blocks/blob/master/LICENSE.
  */
-export default function ScaledImage({id, src, ...props}) {
+export default function ScaledImage({id, src, shadingColor, shadingOpacity, selections, ...props}) {
   const containerId = 'ScaledImage_' + id;
   const [width, setWidth] = useState(0);
   const [image] = useState(new Image());
@@ -43,8 +43,45 @@ export default function ScaledImage({id, src, ...props}) {
           height: image.height * scale,
           image: image,
         });
+        const shading = new Konva.Rect({
+          x: 0,
+          y: 0,
+          width: background.width(),
+          height: background.height(),
+          fill: shadingColor,
+          strokeWidth: 0,
+          opacity: shadingOpacity,
+          visible: true
+        });
+
         const layer = new Konva.Layer();
         layer.add(background);
+        layer.add(shading);
+
+        function rescaledHole(hole) {
+          const holeScale = hole.fillPatternScaleX();
+          if(holeScale !== hole.fillPatternScaleY()) console.error('Inconsistent scale');
+
+          const scaledX = Math.max(Math.min(scale * (hole.x() / holeScale), image.width * scale - 1), 0);
+          const scaledY = Math.max(Math.min(scale * (hole.y() / holeScale), image.height * scale - 1), 0);
+          const scaledRadius = Math.max(scale * hole.radius() / holeScale, 1);
+          return new Konva.Circle({
+            x: scaledX,
+            y: scaledY,
+            radius: scaledRadius,
+            fillPatternImage: hole.fillPatternImage(),
+            fillPatternOffset: { x: scaledX, y: scaledY },
+            fillPatternScale: { x: scale, y: scale },
+            opacity: hole.opacity()
+          });
+        }
+
+        selections.forEach((selection) => {
+          selection.forEach((hole) => {
+            layer.add(rescaledHole(hole));
+          });
+        });
+
         stage.add(layer);
         layer.draw();
       };
@@ -52,7 +89,7 @@ export default function ScaledImage({id, src, ...props}) {
       return () => {
         window.removeEventListener('resize', handleResize);
       }
-    }, [containerId, image, width]);
+    }, [containerId, image, width, shadingColor, shadingOpacity, selections]);
 
     return (<div id={containerId} {...props}/>);
 }
