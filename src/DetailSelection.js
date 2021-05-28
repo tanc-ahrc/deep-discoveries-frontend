@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Masonry from 'react-masonry-css';
 import DetailSelector from './DetailSelector.js';
 import ScaledImage from './ScaledImage.js';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles((theme) => ({
   masonry: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   masonryCell: {
     marginBottom: '10px',
+    position: 'relative',
     '&:hover': {
       cursor: 'pointer',
       opacity: theme.palette.action.hoverOpacity,
@@ -63,13 +65,34 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
               className={classes.masonry}
               columnClassName={classes.masonryColumn}
             >
-              {[input].concat(detailList).map((d) => (
-                <ScaledImage className={classes.masonryCell}
-                             key={d.aid}
-                             id={d.aid}
-                             src={d.url}
-                             onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d);}}
+              <div className={classes.masonryCell} key={input.aid}>
+                <ScaledImage id={input.aid}
+                             src={input.url}
+                             onClick={()=>{setSelections(input.cloneSelections()); setDetailImage(input);}}
                 />
+                <CancelIcon
+                  style={{position: 'absolute', top: 0, right: 0}}
+                  onClick={ () => {
+                    if(detailList.length !== 0) {
+                      const d = detailList[0];
+                      setDetailList({type: 'remove', payload: d});
+                      setInput(d);
+                    }
+                    else setInput(undefined);
+                  }}
+                />
+              </div>
+              {detailList.map((d) => (
+                <div className={classes.masonryCell} key={d.aid}>
+                  <ScaledImage id={d.aid}
+                               src={d.url}
+                               onClick={()=>{setSelections(d.cloneSelections()); setDetailImage(d);}}
+                  />
+                  <CancelIcon
+                    style={{position: 'absolute', top: 0, right: 0}}
+                    onClick={ ()=>{setDetailList({type: 'remove', payload: d});} }
+                  />
+                </div>
               ))}
             </Masonry>
           </Grid>

@@ -14,7 +14,7 @@ export default function BasicSearchSidebar({input, onNewSearch, onDetailSearch})
           <Button fullWidth={true} onClick={onNewSearch}>New search</Button>
         </Grid>
         <Grid item xs={6} align='right'>
-          <Button fullWidth={true} onClick={onDetailSearch}>Detail search</Button>
+          <Button fullWidth={true} onClick={onDetailSearch}>Edit search</Button>
         </Grid>
       </Grid>
       <div style={{paddingTop: '6vh'}}/>
