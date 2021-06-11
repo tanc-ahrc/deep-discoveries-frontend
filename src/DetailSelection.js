@@ -146,7 +146,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
                   <ScaledImage id={image.datum.aid}
                                src={image.datum.url}
                                shadingColor={shadingColor}
-                               shadingOpacity={shadingOpacity}
+                               shadingOpacity={image.datum.selections.current === 0 ? 0 : shadingOpacity}
                                selections={image.datum.selections.stack[image.datum.selections.current]}
                                onClick={()=>{setSelections(image.datum.cloneSelections()); setDetailImage(image.datum);}}
                   />
