@@ -95,11 +95,20 @@ function getWeights(detailList) {
     const map = new Array(image.naturalWidth);
     for(let i = 0; i < map.length; i++) {
       map[i] = new Array(image.naturalHeight);
-      map[i].fill(0);
     }
-    for(const circleArray of detail.selections.stack[detail.selections.current]) {
-      for(const circle of circleArray) {
-        computeCircle(circle, map);
+    if(detail.selections.stack[detail.selections.current].length === 0) {
+      for(let i = 0; i < map.length; i++) {
+        map[i].fill(1);
+      }
+    }
+    else {
+      for(let i = 0; i < map.length; i++) {
+        map[i].fill(0);
+      }
+      for(const circleArray of detail.selections.stack[detail.selections.current]) {
+        for(const circle of circleArray) {
+          computeCircle(circle, map);
+        }
       }
     }
     const columns = [];
