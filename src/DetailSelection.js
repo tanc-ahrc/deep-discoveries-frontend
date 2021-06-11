@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DetailSelection({input, setInput, detailList, setDetailList, cancelDetailSearch}) {
+export default function DetailSelection({input, setInput, detailList, setDetailList, endDetailSearch}) {
   const classes = useStyles();
 
   const [detailImage, setDetailImage] = useState(input)
@@ -133,7 +133,7 @@ export default function DetailSelection({input, setInput, detailList, setDetailL
       <Grid container>
         <Grid container item xs={4}>
           <Grid item xs={12}>
-            <Button onClick={cancelDetailSearch}>Back to results</Button>
+            <Button onClick={endDetailSearch}>Back to results</Button>
           </Grid>
           <Grid item xs={12}>
             <Masonry

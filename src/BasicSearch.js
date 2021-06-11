@@ -74,7 +74,7 @@ export default function BasicSearch({input, setInput, update}) {
                        setResults={setResults}
                        detailList={detailList}
                        setDetailList={setDetailList}
-                       cancelDetailSearch={() => {setDetailSearch(false); getSimilar();}}
+                       endDetailSearch={() => {setDetailSearch(false); getSimilar();}}
       />
     )
   }
