@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
 import Menu from '@material-ui/core/Menu';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -126,6 +127,9 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <AppBar style={{backgroundColor: '#3f51b5'}} position="fixed">
           <Toolbar>
+            <IconButton onClick={()=> {window.location.reload();}}>
+              <HomeIcon style={{color: 'white'}}/>
+            </IconButton>
             <IconButton edge="end" onClick={(e)=>{setMenuLocation(e.currentTarget);}}>
               <MenuIcon/>
             </IconButton>
