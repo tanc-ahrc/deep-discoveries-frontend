@@ -7,7 +7,11 @@ import SearchDatum from './SearchDatum.js';
 import { send } from './Backend.js';
 
 export default function BasicSearch({input, setInput, update}) {
+  const [fetching, setFetching] = useState(false);
+
   function getSimilar() {
+    if(fetching) return;
+    setFetching(true);
     send(input, 33, [input].concat(detailList), (initialResults) => {
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
@@ -25,6 +29,7 @@ export default function BasicSearch({input, setInput, update}) {
   const [results, setResults] = useReducer(
     (oldResults, action) => {
       const newResult = action.payload;
+      setFetching(false);
       switch(action.type) {
         case 'replace': { return newResult; }
         case 'update':  { return oldResults.map((r) => { return r.aid === newResult.aid ? newResult : r; }); }
