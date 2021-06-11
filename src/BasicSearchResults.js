@@ -45,7 +45,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
         <Grid item xs={6}>
           <ToggleButtonGroup style={{width: '100%'}} exclusive value={showLikeness} onChange={(e, n)=>{if(n === true || n === false) setShowLikeness(n);}}>
             <ToggleButton style={{borderRadius: '5px 0   0   5px', width: '50%'}} value={false} disabled={!showLikeness}>Image view</ToggleButton>
-            <ToggleButton style={{borderRadius: '0   5px 5px 0'  , width: '50%'}} value={true}  disabled={ showLikeness} data-tip={likenessTip} data-html={true}>Likeness view</ToggleButton>
+            <ToggleButton style={{borderRadius: '0   5px 5px 0'  , width: '50%'}} value={true}  disabled={ showLikeness} data-tip={likenessTip} data-html={true} data-effect='solid' data-place='bottom'>Likeness view</ToggleButton>
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={3}>
