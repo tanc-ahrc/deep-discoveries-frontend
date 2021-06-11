@@ -130,8 +130,8 @@ export default function App() {
             <IconButton onClick={()=> {window.location.reload();}}>
               <HomeIcon style={{color: 'white'}}/>
             </IconButton>
-            <IconButton edge="end" onClick={(e)=>{setMenuLocation(e.currentTarget);}}>
-              <MenuIcon/>
+            <IconButton onClick={(e)=>{setMenuLocation(e.currentTarget);}}>
+              <MenuIcon style={{color: 'white'}}/>
             </IconButton>
               <Menu
                 anchorEl={menuLocation}
