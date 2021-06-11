@@ -112,6 +112,11 @@ const theme = createMuiTheme({
         color: selectionColor,
       },
     },
+    MuiCircularProgress: {
+      colorPrimary: {
+        color: selectionColor,
+      },
+    },
   },
 });
 

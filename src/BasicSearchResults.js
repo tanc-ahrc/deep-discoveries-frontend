@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicSearchResults({input, results, setResults, detailList, setDetailList}) {
+export default function BasicSearchResults({input, results, setResults, detailList, setDetailList, fetching}) {
   const classes = useStyles();
 
   const [tileSize, setTileSize] = useState(2);
@@ -62,6 +62,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
             <IconButton
               size='small'
               color='primary'
+              disabled={fetching}
               onClick={() => setTileSize(tileSize => tileSize > 1 ? tileSize - 1 : tileSize)}>
               <RemoveCircleOutlineOutlinedIcon/>
             </IconButton>
@@ -69,6 +70,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
           <Grid item xs={8}>
             <Slider
               value={tileSize}
+              disabled={fetching}
               onChange={ (e, x) => { setTileSize(x); } }
               step={1}
               min={1}
@@ -79,12 +81,14 @@ export default function BasicSearchResults({input, results, setResults, detailLi
             <IconButton
               size='small'
               color='primary'
+              disabled={fetching}
               onClick={() => setTileSize(tileSize => tileSize < 3 ? tileSize + 1 : tileSize)}>
               <AddCircleOutlineOutlinedIcon/>
             </IconButton>
           </Grid>
         </Grid>
       </Grid>
+      {fetching ? <div/> :
       <Masonry breakpointCols={5 - tileSize}
                className={classes.masonry}
                columnClassName={classes.masonryColumn}
@@ -93,6 +97,7 @@ export default function BasicSearchResults({input, results, setResults, detailLi
           <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} showLikeness={showLikeness} tileSize={tileSize}/>
         ))}
       </Masonry>
+      }
     </Container>
   );
 }
