@@ -8,6 +8,7 @@ import Slider from '@material-ui/core/Slider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -88,15 +89,17 @@ export default function BasicSearchResults({input, results, setResults, detailLi
           </Grid>
         </Grid>
       </Grid>
-      {fetching ? <div/> :
-      <Masonry breakpointCols={5 - tileSize}
-               className={classes.masonry}
-               columnClassName={classes.masonryColumn}
-               style={{paddingTop: '3vh'}}>
-        {results.map((result) => (
-          <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} showLikeness={showLikeness} tileSize={tileSize}/>
-        ))}
-      </Masonry>
+      {fetching ?
+        <CircularProgress style={{marginTop: '3vh', height: '50vh', width: '50vh'}}/>
+      :
+        <Masonry breakpointCols={5 - tileSize}
+                 className={classes.masonry}
+                 columnClassName={classes.masonryColumn}
+                 style={{paddingTop: '3vh'}}>
+          {results.map((result) => (
+            <ResultTile className={classes.masonryCell} key={result.aid} result={result} detailList={detailList} setDetailList={setDetailList} showLikeness={showLikeness} tileSize={tileSize}/>
+          ))}
+        </Masonry>
       }
     </Container>
   );

@@ -5,11 +5,8 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FbImageLibrary from 'react-fb-image-grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function BasicSearchSidebar({input, detailList, onNewSearch, onDetailSearch, fetching}) {
-  const progress = fetching ?
-    <CircularProgress style={{height: '100%', width: '100%', position: 'absolute', top: 0, left: 0, zIndex: 2}}/> : ''
   return (
     <Container>
       <div style={{position: 'relative', top: 0, left: 0}}>
@@ -18,7 +15,6 @@ export default function BasicSearchSidebar({input, detailList, onNewSearch, onDe
           hideOverlay={true}
           countFrom={4}
         />
-        {progress}
       </div>
       <Grid container style={{paddingTop: '3vh'}} spacing={2}>
         <Grid item xs={6}>
