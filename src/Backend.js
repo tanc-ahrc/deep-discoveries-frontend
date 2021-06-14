@@ -1,3 +1,5 @@
+import SearchDatum from './SearchDatum.js';
+
 const endpoint = 'https://decade.ac.uk/deepdiscovery/api/upload';
 
 export function send(input, resultCount, details, callback, engine = 'Style', synchronous = false) {
@@ -27,10 +29,28 @@ export function send(input, resultCount, details, callback, engine = 'Style', sy
 
 export function randomImages(count) {
   let result;
-  send(null, count, null, (response) => {
+  const params = new URLSearchParams(window.location.search);
+  const forcedImages = [];
+  if(params.has('f')) {
+    for(const f of params.get('f').split(';')) {
+      let [aid, collection] = f.split(',');
+      let url;
+      if(isNaN(aid)) { //aid is not a number: assume it is a URL
+        url = aid;
+        aid = 0;
+      }
+      else { //aid is a number: assume it is actually an aid and construct the URL
+        url = 'https://s3.eu-west-2.amazonaws.com/deepdiscovery.thumbnails/' + collection + '/' + aid + '.jpg';
+      }
+      const r = new SearchDatum(aid, url);
+      r.collection = collection; //This only works if we are given a collection that getCollectionInfo will accept. TODO: Add a 'none' collection option.
+      forcedImages.push(r);
+    }
+  }
+  send(null, count - forcedImages.length, null, (response) => {
     result = response;
   }, 'Random', true);
-  return result;
+  return forcedImages.concat(result);
 }
 
 export function getCollectionInfo(collection) {
