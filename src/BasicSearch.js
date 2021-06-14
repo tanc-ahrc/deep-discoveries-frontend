@@ -15,7 +15,7 @@ export default function BasicSearch({input, setInput, update}) {
     send(input, 33, [input].concat(detailList), (initialResults) => {
       //If the input was an asset, do not display it in the results
       //TODO: We should shortcircuit. Or, probably, it is safe just to shift the first element off.
-      if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== input.aid; });
+      if(input.aid) initialResults = initialResults.filter((r) => { return r.aid !== parseInt(input.aid); });
 
       setResults({type: 'replace', payload: initialResults.map((x) => {
         const y = new SearchDatum(x.aid, x.url);
