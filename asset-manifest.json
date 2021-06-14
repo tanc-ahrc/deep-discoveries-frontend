@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/deep-discoveries-frontend/static/js/main.bb6102f0.chunk.js",
-    "main.js.map": "/deep-discoveries-frontend/static/js/main.bb6102f0.chunk.js.map",
+    "main.js": "/deep-discoveries-frontend/static/js/main.d2793902.chunk.js",
+    "main.js.map": "/deep-discoveries-frontend/static/js/main.d2793902.chunk.js.map",
     "runtime-main.js": "/deep-discoveries-frontend/static/js/runtime-main.6d202c08.js",
     "runtime-main.js.map": "/deep-discoveries-frontend/static/js/runtime-main.6d202c08.js.map",
     "static/css/2.bc5e1561.chunk.css": "/deep-discoveries-frontend/static/css/2.bc5e1561.chunk.css",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.6d202c08.js",
     "static/css/2.bc5e1561.chunk.css",
     "static/js/2.66df2358.chunk.js",
-    "static/js/main.bb6102f0.chunk.js"
+    "static/js/main.d2793902.chunk.js"
   ]
 }
