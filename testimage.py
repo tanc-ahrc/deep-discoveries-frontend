@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # This is a quick way to test the selection encoding/decoding
 # Example usage:
-# 1) Hack getSimilar() in BasicSearchResults to dump
-#    selection_encodings to the console
+# 1) Uncomment line near the end of getWeights in Backend.js
+#    to dump weight_encoding to the console
 # 2) Copy a string from the array as dumped to the console
 # 3) xsel --clipboard --output | sed 's/^.//' | sed 's/.$//' | ./testimage.py
 # (The sed bit is chopping the quote marks off)

@@ -119,6 +119,9 @@ function getWeights(detailList) {
       }
       columns.push(column);
     }
+    //uncomment next line to dump encodings to console
+    //helpful when testing that the encodings are working with testimage.py
+    //console.log(weight_encoding + columns.join(''));
     weights.push(weight_encoding + columns.join(''));
   }
   return weights.join('');
