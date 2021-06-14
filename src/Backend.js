@@ -10,6 +10,8 @@ export function send(input, resultCount, details, callback, engine = 'Style', sy
   formData.append('searchengine', engine);
   formData.append('resultcount', resultCount);
   if(details) formData.append('weights', getWeights(details));
+  const params = new URLSearchParams(window.location.search);
+  formData.append('weightfactor', params.has('w') ? params.get('w') : 10);
 
   const xhr = new XMLHttpRequest();
   xhr.open('POST', endpoint, !synchronous);
