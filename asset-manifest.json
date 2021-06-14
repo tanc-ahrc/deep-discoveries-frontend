@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/deep-discoveries-frontend/static/js/main.d2793902.chunk.js",
-    "main.js.map": "/deep-discoveries-frontend/static/js/main.d2793902.chunk.js.map",
+    "main.js": "/deep-discoveries-frontend/static/js/main.21bf22c6.chunk.js",
+    "main.js.map": "/deep-discoveries-frontend/static/js/main.21bf22c6.chunk.js.map",
     "runtime-main.js": "/deep-discoveries-frontend/static/js/runtime-main.6d202c08.js",
     "runtime-main.js.map": "/deep-discoveries-frontend/static/js/runtime-main.6d202c08.js.map",
     "static/css/2.bc5e1561.chunk.css": "/deep-discoveries-frontend/static/css/2.bc5e1561.chunk.css",
-    "static/js/2.66df2358.chunk.js": "/deep-discoveries-frontend/static/js/2.66df2358.chunk.js",
-    "static/js/2.66df2358.chunk.js.map": "/deep-discoveries-frontend/static/js/2.66df2358.chunk.js.map",
+    "static/js/2.3cb77685.chunk.js": "/deep-discoveries-frontend/static/js/2.3cb77685.chunk.js",
+    "static/js/2.3cb77685.chunk.js.map": "/deep-discoveries-frontend/static/js/2.3cb77685.chunk.js.map",
     "static/js/3.b5f16369.chunk.js": "/deep-discoveries-frontend/static/js/3.b5f16369.chunk.js",
     "static/js/3.b5f16369.chunk.js.map": "/deep-discoveries-frontend/static/js/3.b5f16369.chunk.js.map",
     "index.html": "/deep-discoveries-frontend/index.html",
     "static/css/2.bc5e1561.chunk.css.map": "/deep-discoveries-frontend/static/css/2.bc5e1561.chunk.css.map",
-    "static/js/2.66df2358.chunk.js.LICENSE.txt": "/deep-discoveries-frontend/static/js/2.66df2358.chunk.js.LICENSE.txt"
+    "static/js/2.3cb77685.chunk.js.LICENSE.txt": "/deep-discoveries-frontend/static/js/2.3cb77685.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6d202c08.js",
     "static/css/2.bc5e1561.chunk.css",
-    "static/js/2.66df2358.chunk.js",
-    "static/js/main.d2793902.chunk.js"
+    "static/js/2.3cb77685.chunk.js",
+    "static/js/main.21bf22c6.chunk.js"
   ]
 }
