@@ -144,6 +144,7 @@ export default function App() {
                 open={Boolean(menuLocation)}
               >
                 <MenuList onMouseLeave={()=>{setMenuLocation(null);}}>
+                  <MenuItem><a href="https://tanc-ahrc.github.io/DeepDiscoveries/">Project website</a></MenuItem>
                   <MenuItem><a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">Source (GitHub)</a></MenuItem>
                   <MenuItem onClick={()=>{setAboutOpen(true);}}>About</MenuItem>
                 </MenuList>
@@ -153,7 +154,7 @@ export default function App() {
         <Dialog open={aboutOpen} onClose={()=>{setAboutOpen(false);}}>
           <DialogTitle>About</DialogTitle>
           <DialogContent>
-            <DialogContentText>Designed by ...</DialogContentText>
+            <DialogContentText>Designed by the Deep Discoveries Team</DialogContentText>
             <DialogContentText>Copyright &copy; 2021 Crown Copyright (The National Archives) except where otherwise stated in the source.</DialogContentText>
             <DialogContentText>Licensed under the MIT License.</DialogContentText>
             <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source</a> for details.</DialogContentText>
