@@ -14,6 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Typography from '@material-ui/core/Typography';
 
 const defaultBlack = '#292929';
 const selectionTextColor = '#FFFFFF';
@@ -158,9 +159,12 @@ export default function App() {
             <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source</a> for details.</DialogContentText>
           </DialogContent>
         </Dialog>
-        <div style={{position: 'relative', top: '10vh'}}>
-          <Start/>
-        </div>
+          <div style={{position: 'relative', top: '10vh'}}>
+            <Start/>
+            <Typography style={{marginTop: '10vh', position: 'relative'}} align='center'>
+              Images &#169; Victoria and Albert Museum, London, &#169; Royal Botanic Garden Edinburgh and &#169; Crown Copyright (The National Archives)
+            </Typography>
+          </div>
       </ThemeProvider>
     </div>
   );
