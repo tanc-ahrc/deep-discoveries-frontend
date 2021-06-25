@@ -154,10 +154,10 @@ export default function App() {
         <Dialog open={aboutOpen} onClose={()=>{setAboutOpen(false);}}>
           <DialogTitle>About</DialogTitle>
           <DialogContent>
-            <DialogContentText>Designed by the Deep Discoveries Team</DialogContentText>
-            <DialogContentText>Copyright &copy; 2021 Crown Copyright (The National Archives) except where otherwise stated in the source.</DialogContentText>
+            <DialogContentText>Site designed by the Deep Discoveries Team.</DialogContentText>
+            <DialogContentText>Copyright &copy; 2021 Crown Copyright (The National Archives) except where otherwise stated in the source code.</DialogContentText>
             <DialogContentText>Licensed under the MIT License.</DialogContentText>
-            <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source</a> for details.</DialogContentText>
+            <DialogContentText>See <a href="https://github.com/tanc-ahrc/deep-discoveries-frontend">source code</a> for details.</DialogContentText>
           </DialogContent>
         </Dialog>
           <div style={{position: 'relative', top: '10vh'}}>
